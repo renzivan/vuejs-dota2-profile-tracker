@@ -1,6 +1,7 @@
-# Dota 2 Web App
+# Dota 2 Profile Web App Using Vue.js
 
-### A Dota 2 web app that displays user data using Vue.js and APIs
+### API Source
+[OpenDota API Documentation](https://docs.opendota.com)
 
 ### Getting started from scratch
 ```bash
