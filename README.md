@@ -10,6 +10,9 @@ npm install -g @vue/cli
 # New Vue Project
 vue create hello-world
 
+# Install vue-router
+npm install vue-router
+
 # Install axios
 npm install axios
 
