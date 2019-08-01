@@ -5,6 +5,7 @@
     <br>
     <div>
       <img :src="`${avatarUrl}`" >
+      <p>Wins: {{ wins }} | Losses: {{ losses }} | Winrate: {{ winrateCalc }} </p>
       <h3>{{ personaName }}</h3>
       <img :src="imgRankUrl">
       <img :src="imgTierUrl">
@@ -21,12 +22,14 @@ export default {
   data () {
     return {
       baseUrl: 'https://api.opendota.com/api',
-      dotaId: '', // 100715623
       section: 'players',
+      dotaId: '', // 100715623
       userData: {},
       avatarUrl: '',
       personaName: '',
-      rankTier: ''
+      rankTier: '',
+      wins: '',
+      losses: ''
     }
   },
   methods: {
@@ -37,6 +40,11 @@ export default {
           this.avatarUrl = res.data.profile.avatarfull
           this.personaName = res.data.profile.personaname
           this.rankTier = res.data.rank_tier
+          return axios.get(this.baseUrl + '/' + this.section + '/' + this.dotaId + '/' + 'wl')
+        })
+        .then((res) => {
+          this.wins = res.data.win
+          this.losses = res.data.lose
         })
         .catch((err) => {
           console.log(err)
@@ -56,6 +64,11 @@ export default {
       let star = this.splitRankTier[1]
       let imgTierSrc = require.context('../assets/images/rank_icons/', false, /\.png$/)
       return (star < 1 ? false : imgTierSrc('./' + 'rank_star_' + star + '.png'))
+    },
+    winrateCalc () {
+      let totalMatches = this.wins + this.losses
+      let rate = ((this.wins / totalMatches) * 100).toFixed(2)
+      return totalMatches > 0 ? rate : ''
     }
   }
 }
