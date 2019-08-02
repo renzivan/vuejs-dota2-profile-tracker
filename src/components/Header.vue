@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="header">
     <ul>
       <li>Overview</li>
       <li>Matches</li>
