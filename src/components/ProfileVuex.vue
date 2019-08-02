@@ -9,7 +9,7 @@
       <p>Steam URL: {{ steamUrl }} | Last Login: {{ lastLogin }}</p>
       <h3>{{ personaName }}</h3>
       <img :src="imgRankUrl">
-      <img :src="imgTierUrl">
+      <pre>Recent Matches: {{ recentMatches }}</pre>
     </div>
   </div>
 </template>
@@ -28,7 +28,8 @@ export default {
       personaName: '',
       rankTier: '',
       wins: '',
-      losses: ''
+      losses: '',
+      recentMatches: ''
     }
   },
   methods: {
@@ -39,7 +40,8 @@ export default {
   computed: {
     ...mapGetters({
       getUserData: 'getUserData',
-      getUserWL: 'getUserWL'
+      getUserWL: 'getUserWL',
+      getRecentMatches: 'getRecentMatches'
     }),
     splitRankTier () {
       return (this.rankTier / 10).toFixed(1).split('.')
@@ -71,6 +73,9 @@ export default {
     getUserWL (val) {
       this.wins = val.win
       this.losses = val.lose
+    },
+    getRecentMatches (val) {
+      this.recentMatches = val
     }
   }
 }

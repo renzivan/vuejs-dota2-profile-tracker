@@ -8,5 +8,9 @@ export default {
   getUserWL (dotaId) {
     let url = `https://api.opendota.com/api/players/${dotaId}/wl`
     return axios.get(url)
+  },
+  getRecentMatches (dotaId) {
+    let url = `https://api.opendota.com/api/players/${dotaId}/recentmatches`
+    return axios.get(url)
   }
 }

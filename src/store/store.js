@@ -8,11 +8,13 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
   state: {
     userData: null,
-    winloss: null
+    winloss: null,
+    recentMatches: null
   },
   getters: {
     getUserData: state => state.userData,
-    getUserWL: state => state.winloss
+    getUserWL: state => state.winloss,
+    getRecentMatches: state => state.recentMatches
   },
   mutations: {
     getUserData (state, payload) {
@@ -25,9 +27,15 @@ export const store = new Vuex.Store({
     },
     getUserWL (state, payload) {
       state.winloss = {}
+      state.winloss = payload
       state.winloss.win = payload.data.win
       state.winloss.lose = payload.data.lose
-      console.log(state.winloss)
+    },
+    getRecentMatches (state, payload) {
+      state.recentMatches = {}
+      // state.recentMatches = payload.data[0].match_id
+      state.recentMatches = payload.data
+      console.log(state.recentMatches)
     }
   },
   actions: {
@@ -36,6 +44,7 @@ export const store = new Vuex.Store({
       xhr.then((res) => {
         commit('getUserData', res)
         dispatch('getUserWL', dotaId)
+        dispatch('getRecentMatches', dotaId)
       }).catch((err) => {
         console.log(err)
       })
@@ -44,6 +53,14 @@ export const store = new Vuex.Store({
       let xhr = httpReq.getUserWL(dotaId)
       xhr.then((res) => {
         commit('getUserWL', res)
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
+    getRecentMatches ({ commit }, dotaId) {
+      let xhr = httpReq.getRecentMatches(dotaId)
+      xhr.then((res) => {
+        commit('getRecentMatches', res)
       }).catch((err) => {
         console.log(err)
       })
