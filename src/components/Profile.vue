@@ -1,63 +1,84 @@
 <template>
   <div id="profile">
-    <input type="text" v-model="dotaId" autofocus />
-    <button @click="submitDotaId">Submit</button>
+    <input type="text" v-model="dotaId" @keyup.enter="submitDotaId" autofocus />
+    <button @click.prevent="submitDotaId">Submit</button>
     <br>
     <div>
-      <img :src="`${avatarUrl}`" >
-      <p>Wins: {{ wins }} | Losses: {{ losses }} | Winrate: {{ winrateCalc }} </p>
-      <h3>{{ personaName }}</h3>
+      <img :src="`${userData.avatarUrl}`" >
+      <p>Wins: {{ userData.wins }} | Losses: {{ userData.losses }} | Winrate: {{ winrateCalc }} </p>
+      <p>Steam URL: {{ userData.steamUrl }} </p>
+      <p> Last Login: {{ userData.lastLogin }}</p>
+      <h3>{{ userData.personaName }}</h3>
+      <p>Solo MMR: {{ userData.soloMmr }}</p>
+      <p>Party MMR: {{ userData.partyMmr }}</p>
+      <p>Leaderboard: {{ userData.leaderboardRank }}</p>
       <img :src="imgRankUrl">
       <img :src="imgTierUrl">
+      <h2>Recent Matches: (Player Slot: 0-127 are Radiant, 128-255 are Dire) </h2>
+      <ul>
+        <li v-for="(match, id) of recentMatches" :key="id">
+          <p>match_id: {{ match.match_id }} | hero_id: {{ match.hero_id }} | result: {{ match.radiant_win }} | mode: {{ match.game_mode }} | duration: {{ match.duration }} | kda: {{ match.kills }} {{ match.deaths }} {{ match.assists }} | party: {{ match.party }} | player_slot: {{ match.player_slot }} </p>
+        </li>
+      </ul>
+      <pre>{{ recentMatches }}</pre>
     </div>
-    <pre> {{ userData.data }} </pre>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Profile',
   data () {
     return {
-      baseUrl: 'https://api.opendota.com/api',
-      section: 'players',
-      dotaId: '', // 100715623
-      userData: {},
-      avatarUrl: '',
-      personaName: '',
-      rankTier: '',
-      wins: '',
-      losses: ''
+      dotaId: '', // rank 58 100594231  ... rank 8 91369376
+      userData: {
+        steamUrl: '',
+        lastLogin: '',
+        avatarUrl: '',
+        personaName: '',
+        rankTier: '',
+        wins: '',
+        losses: '',
+        soloMmr: '',
+        partyMmr: '',
+        leaderboardRank: ''
+      },
+      recentMatches: {},
+      heroes: {
+        id: '',
+        name: '',
+        primaryAttr: ''
+      },
+      gameModes: {
+        id: '',
+        name: ''
+      }
     }
   },
   methods: {
     submitDotaId () {
-      axios.get(this.baseUrl + '/' + this.section + '/' + this.dotaId)
-        .then((res) => {
-          this.userData = res
-          this.avatarUrl = res.data.profile.avatarfull
-          this.personaName = res.data.profile.personaname
-          this.rankTier = res.data.rank_tier
-          return axios.get(this.baseUrl + '/' + this.section + '/' + this.dotaId + '/' + 'wl')
-        })
-        .then((res) => {
-          this.wins = res.data.win
-          this.losses = res.data.lose
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+      this.$store.dispatch('getUserData', this.dotaId)
     }
   },
   computed: {
+    ...mapGetters({
+      getUserData: 'getUserData',
+      getUserWL: 'getUserWL',
+      getRecentMatches: 'getRecentMatches'
+    }),
     splitRankTier () {
-      return (this.rankTier / 10).toFixed(1).split('.')
+      return (this.userData.rankTier / 10).toFixed(1).split('.')
     },
     imgRankUrl () {
-      let medal = this.splitRankTier[0]
+      let medal = this.splitRankTier[0].toString()
       let imgRankSrc = require.context('../assets/images/rank_icons/', false, /\.png$/)
+      if (this.leaderboardRank > 10 && this.leaderboardRank < 101) {
+        medal = '8b'
+      } else if (this.leaderboardRank > 0 && this.leaderboardRank < 11) {
+        medal = '8c'
+      }
       return imgRankSrc('./' + 'rank_icon_' + medal + '.png')
     },
     imgTierUrl () {
@@ -66,9 +87,28 @@ export default {
       return (star < 1 ? false : imgTierSrc('./' + 'rank_star_' + star + '.png'))
     },
     winrateCalc () {
-      let totalMatches = this.wins + this.losses
-      let rate = ((this.wins / totalMatches) * 100).toFixed(2)
+      let totalMatches = this.userData.wins + this.userData.losses
+      let rate = ((this.userData.wins / totalMatches) * 100).toFixed(2)
       return totalMatches > 0 ? rate : ''
+    }
+  },
+  watch: {
+    getUserData (val) {
+      this.userData.steamUrl = val.steamUrl
+      this.userData.lastLogin = val.lastLogin
+      this.userData.avatarUrl = val.avatarUrl
+      this.userData.personaName = val.personaName
+      this.userData.rankTier = val.rankTier
+      this.userData.soloMmr = val.soloMmr
+      this.userData.partyMmr = val.partyMmr
+      this.userData.leaderboardRank = val.leaderboardRank
+    },
+    getUserWL (val) {
+      this.userData.wins = val.win
+      this.userData.losses = val.lose
+    },
+    getRecentMatches (val) {
+      this.recentMatches = val
     }
   }
 }

@@ -18,22 +18,26 @@ export const store = new Vuex.Store({
   },
   mutations: {
     getUserData (state, payload) {
-      state.userData = {}
-      state.userData.steamUrl = payload.data.profile.profileurl
-      state.userData.lastLogin = payload.data.profile.last_login
-      state.userData.avatarUrl = payload.data.profile.avatarfull
-      state.userData.personaName = payload.data.profile.personaname
-      state.userData.rankTier = payload.data.rank_tier
+      let res = payload.data
+      state.userData = {
+        steamUrl: res.profile.profileurl,
+        lastLogin: res.profile.last_login,
+        avatarUrl: res.profile.avatarfull,
+        personaName: res.profile.personaname,
+        rankTier: res.rank_tier,
+        soloMmr: res.solo_competitive_rank,
+        partyMmr: res.competitive_rank,
+        leaderboardRank: res.leaderboard_rank
+      }
     },
     getUserWL (state, payload) {
-      state.winloss = {}
-      state.winloss = payload
-      state.winloss.win = payload.data.win
-      state.winloss.lose = payload.data.lose
+      let res = payload.data
+      state.winloss = {
+        win: res.win,
+        lose: res.lose
+      }
     },
     getRecentMatches (state, payload) {
-      state.recentMatches = {}
-      // state.recentMatches = payload.data[0].match_id
       state.recentMatches = payload.data
       console.log(state.recentMatches)
     }

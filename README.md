@@ -1,7 +1,8 @@
 # Dota 2 Profile Web App Using Vue.js
 
-### API Source
+### References
 [OpenDota API Documentation](https://docs.opendota.com)
+[Game Modes](https://github.com/odota/dotaconstants/blob/master/json/game_mode.json)
 
 ### Getting started from scratch
 ```bash
