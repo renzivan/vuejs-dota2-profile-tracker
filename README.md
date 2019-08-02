@@ -14,6 +14,9 @@ vue create hello-world
 # Install vue-router
 npm install vue-router
 
+# Install Vuex
+npm install vuex
+
 # Install axios
 npm install axios
 

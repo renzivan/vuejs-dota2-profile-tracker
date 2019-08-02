@@ -1,19 +1,22 @@
 <template>
   <div id="app">
    <Header />
-   <Profile />
+   <!-- <Profile /> -->
+   <ProfileVuex />
   </div>
 </template>
 
 <script>
 import Header from './components/Header'
-import Profile from './components/Profile'
+// import Profile from './components/Profile'
+import ProfileVuex from './components/ProfileVuex'
 
 export default {
   name: 'app',
   components: {
     Header,
-    Profile
+    // Profile,
+    ProfileVuex
   }
 }
 </script>
