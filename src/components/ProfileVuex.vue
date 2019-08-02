@@ -6,11 +6,11 @@
     <div>
       <img :src="`${avatarUrl}`" >
       <p>Wins: {{ wins }} | Losses: {{ losses }} | Winrate: {{ winrateCalc }} </p>
+      <p>Steam URL: {{ steamUrl }} | Last Login: {{ lastLogin }}</p>
       <h3>{{ personaName }}</h3>
       <img :src="imgRankUrl">
       <img :src="imgTierUrl">
     </div>
-    <pre> {{ userData }} </pre>
   </div>
 </template>
 
@@ -22,7 +22,8 @@ export default {
   data () {
     return {
       dotaId: '', // 100715623
-      userData: {},
+      steamUrl: '',
+      lastLogin: '',
       avatarUrl: '',
       personaName: '',
       rankTier: '',
@@ -32,13 +33,13 @@ export default {
   },
   methods: {
     submitDotaId () {
-      this.$store.dispatch('getPlayer', this.dotaId)
+      this.$store.dispatch('getUserData', this.dotaId)
     }
   },
   computed: {
     ...mapGetters({
-      getPlayer: 'getPlayer',
-      getUserData: 'getUserData'
+      getUserData: 'getUserData',
+      getUserWL: 'getUserWL'
     }),
     splitRankTier () {
       return (this.rankTier / 10).toFixed(1).split('.')
@@ -60,10 +61,16 @@ export default {
     }
   },
   watch: {
-    getPlayer (nv, ov) {
-      this.avatarUrl = nv.avatarUrl
-      this.personaName = nv.personaName
-      this.rankTier = nv.rankTier
+    getUserData (val) {
+      this.steamUrl = val.steamUrl
+      this.lastLogin = val.lastLogin
+      this.avatarUrl = val.avatarUrl
+      this.personaName = val.personaName
+      this.rankTier = val.rankTier
+    },
+    getUserWL (val) {
+      this.wins = val.win
+      this.losses = val.lose
     }
   }
 }
