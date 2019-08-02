@@ -9,6 +9,7 @@
       <p>Steam URL: {{ steamUrl }} | Last Login: {{ lastLogin }}</p>
       <h3>{{ personaName }}</h3>
       <img :src="imgRankUrl">
+      <img :src="imgTierUrl">
       <pre>Recent Matches: {{ recentMatches }}</pre>
     </div>
   </div>
