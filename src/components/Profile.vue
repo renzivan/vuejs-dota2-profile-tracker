@@ -15,18 +15,22 @@
       <img :src="imgRankUrl">
       <img :src="imgTierUrl">
       <h2>Recent Matches: (Player Slot: 0-127 are Radiant, 128-255 are Dire) </h2>
+      <p>Heroes: {{ heroes[11].localized_name }}</p>
       <ul>
         <li v-for="(match, id) of recentMatches" :key="id">
-          <p>match_id: {{ match.match_id }} | hero_id: {{ match.hero_id }} | result: {{ match.radiant_win }} | mode: {{ match.game_mode }} | duration: {{ match.duration }} | kda: {{ match.kills }} {{ match.deaths }} {{ match.assists }} | party: {{ match.party }} | player_slot: {{ match.player_slot }} </p>
+          <p>match_id: {{ match.match_id }} | result: {{ match.radiant_win }} | duration: {{ match.duration }} | kda: {{ match.kills }} {{ match.deaths }} {{ match.assists }} | party: {{ match.party }} | player_slot: {{ match.player_slot }} ~ </p>
+          <p>Hero: {{ match.hero_id }} ~ {{ parsedHeroes[match.hero_id].localized_name }}</p>
+          <p>Game Mode: {{ match.game_mode }} ~ {{ gameModes[match.game_mode].localized_name }}</p>
         </li>
       </ul>
-      <pre>{{ recentMatches }}</pre>
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import jsonGameMode from '@/json/gameModes.json'
+import jsonHeroes from '@/json/heroes.json'
 
 export default {
   name: 'Profile',
@@ -46,15 +50,8 @@ export default {
         leaderboardRank: ''
       },
       recentMatches: {},
-      heroes: {
-        id: '',
-        name: '',
-        primaryAttr: ''
-      },
-      gameModes: {
-        id: '',
-        name: ''
-      }
+      gameModes: jsonGameMode,
+      heroes: jsonHeroes
     }
   },
   methods: {
@@ -90,6 +87,16 @@ export default {
       let totalMatches = this.userData.wins + this.userData.losses
       let rate = ((this.userData.wins / totalMatches) * 100).toFixed(2)
       return totalMatches > 0 ? rate : ''
+    },
+    parsedHeroes () {
+      let heroesObject = this.heroes
+      let arrayToObj = (array, keyField) =>
+        array.reduce((obj, item) => {
+          obj[item[keyField]] = item
+          return obj
+        }, {})
+      heroesObject = arrayToObj(heroesObject, 'id')
+      return heroesObject
     }
   },
   watch: {
