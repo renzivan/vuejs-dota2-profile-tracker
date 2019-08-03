@@ -39,7 +39,6 @@ export const store = new Vuex.Store({
     },
     getRecentMatches (state, payload) {
       state.recentMatches = payload.data
-      console.log(state.recentMatches)
     }
   },
   actions: {
