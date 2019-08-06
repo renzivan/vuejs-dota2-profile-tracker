@@ -1,7 +1,9 @@
 <template>
     <b-container fluid id="main-container">
-      <Header />
-      <Profile />
+        <Header />
+      <b-container>
+        <Profile />
+      </b-container>
     </b-container>
 </template>
 
