@@ -24,7 +24,15 @@ npm install axios
 # Install Sass: create main.scss, and import in main.js
 npm install node-sass sass-loader --save-dev
 
+# Install Bootstrap Vue: 
+  #import BootstrapVue from 'bootstrap-vue'
+  #import 'bootstrap/dist/css/bootstrap.css'
+  #import 'bootstrap-vue/dist/bootstrap-vue.css'
+npm install bootstrap-vue bootstrap
+
 # Run application
 npm run serve
 
 ```
+
+[Bootstrap-Vue Documentation](https://bootstrap-vue.js.org/docs)
