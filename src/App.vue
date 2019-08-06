@@ -1,8 +1,8 @@
 <template>
-  <div id="app">
-   <Header />
-   <Profile />
-  </div>
+    <b-container fluid id="main-container">
+      <Header />
+      <Profile />
+    </b-container>
 </template>
 
 <script>
@@ -19,4 +19,7 @@ export default {
 </script>
 
 <style scoped>
+  #main-container {
+    padding: 0px;
+  }
 </style>
