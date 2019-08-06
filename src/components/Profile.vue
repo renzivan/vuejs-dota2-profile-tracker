@@ -2,8 +2,7 @@
   <div id="profile">
     <br>
     <div style="overflow: auto; display: flex">
-      <h2>Profile:</h2>
-      <img :src="`${userData.avatarUrl}`" >
+      <b-img thumbnail :src="`${userData.avatarUrl}`" id="profile-avatar"/>
       <p>Wins: {{ winloss.win }} | Losses: {{ winloss.lose }} | Winrate: {{ winrateCalc }} </p>
       <p>Steam URL: {{ userData.steamUrl }} </p>
       <p>Last Login: {{ userData.lastLogin }}</p>
@@ -197,4 +196,8 @@ export default {
 </script>
 
 <style scoped>
+#profile-avatar {
+  width: auto;
+  height: 200px;
+}
 </style>
