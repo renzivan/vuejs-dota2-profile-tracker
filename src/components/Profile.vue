@@ -1,7 +1,5 @@
 <template>
   <div id="profile">
-    <input type="text" v-model="dotaId" @keyup.enter="submitDotaId" autofocus />
-    <button @click="submitDotaId">Submit</button>
     <br>
     <div style="overflow: auto; display: flex">
       <h2>Profile:</h2>
@@ -77,7 +75,7 @@ export default {
   data () {
     return {
       baseUrl: 'https://api.opendota.com/api',
-      dotaId: '', // rank 58 100594231  ... rank 8 91369376
+      // dotaId: '', // rank 58 100594231  ... rank 8 91369376
       userData: {
         steamUrl: '',
         lastLogin: '',
@@ -98,10 +96,6 @@ export default {
     }
   },
   methods: {
-    submitDotaId () {
-      this.$store.dispatch('getUserData', this.dotaId)
-      this.$store.dispatch('getHeroes')
-    },
     objectParser (val) { // needed if array index != array[].id
       let parsedObject = val
       let arrayToObj = (array, keyField) =>
