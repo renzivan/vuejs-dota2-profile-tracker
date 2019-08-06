@@ -1,28 +1,69 @@
 <template>
   <div id="profile">
     <input type="text" v-model="dotaId" @keyup.enter="submitDotaId" autofocus />
-    <button @click.prevent="submitDotaId">Submit</button>
+    <button @click="submitDotaId">Submit</button>
     <br>
-    <div>
+    <div style="overflow: auto; display: flex">
+      <h2>Profile:</h2>
       <img :src="`${userData.avatarUrl}`" >
-      <p>Wins: {{ userData.wins }} | Losses: {{ userData.losses }} | Winrate: {{ winrateCalc }} </p>
+      <p>Wins: {{ winloss.win }} | Losses: {{ winloss.lose }} | Winrate: {{ winrateCalc }} </p>
       <p>Steam URL: {{ userData.steamUrl }} </p>
-      <p> Last Login: {{ userData.lastLogin }}</p>
+      <p>Last Login: {{ userData.lastLogin }}</p>
       <h3>{{ userData.personaName }}</h3>
       <p>Solo MMR: {{ userData.soloMmr }}</p>
       <p>Party MMR: {{ userData.partyMmr }}</p>
       <p>Leaderboard: {{ userData.leaderboardRank }}</p>
       <img :src="imgRankUrl">
       <img :src="imgTierUrl">
-      <h2>Recent Matches: (Player Slot: 0-127 are Radiant, 128-255 are Dire) </h2>
-      <p>Heroes: {{ heroes[11].localized_name }}</p>
-      <ul>
-        <li v-for="(match, id) of recentMatches" :key="id">
-          <p>match_id: {{ match.match_id }} | result: {{ match.radiant_win }} | duration: {{ match.duration }} | kda: {{ match.kills }} {{ match.deaths }} {{ match.assists }} | party: {{ match.party }} | player_slot: {{ match.player_slot }} ~ </p>
-          <p>Hero: {{ match.hero_id }} ~ {{ parsedHeroes[match.hero_id].localized_name }}</p>
-          <p>Game Mode: {{ match.game_mode }} ~ {{ gameModes[match.game_mode].localized_name }}</p>
+    </div>
+    <hr>
+    <div style="overflow: auto">
+      <h2>Friends</h2>
+      <ul style="display: flex">
+        <li v-for="(friend, id) of friends" :key="id">
+          <p>{{ friend.personaname }}</p>
+          <img :src="`${ friend.avatar }`" >
+          <p>last_played: {{ friend.last_played }}</p>
+          <p>games: {{ friend.games }}</p>
+          <p>wins: {{ friend.wins }}</p>
         </li>
       </ul>
+    </div>
+    <hr>
+    <div style="overflow: auto">
+      <h2>Recent Matches:</h2>
+      <ul style="display: flex">
+        <li v-for="(recentMatch, id) of recentMatches" :key="id">
+          <p>match_id: {{ recentMatch.match_id }} | party: {{ recentMatch.party_size }} </p>
+          <!-- <p>Solo or Party: {{ soloParty(`${match.party_size}`) }}</p> -->
+          <p>Duration: {{ durationCalc(`${recentMatch.duration}`) }}</p>
+          <p>Hero: {{ parsedHeroes[recentMatch.hero_id].localized_name }}</p>
+          <p>Game Mode: {{ gameModes[recentMatch.game_mode].localized_name }}</p>
+          <p>KDA: {{ recentMatch.kills }}/{{ recentMatch.deaths }}/{{ recentMatch.assists }}</p>
+          <p>Team: {{ team(`${recentMatch.player_slot}`) }}</p>
+          <p>Result: {{ gameResult(`${recentMatch.radiant_win}`,team(`${recentMatch.player_slot}`)) }}</p>
+          <img :src="`${imgHeroUrl(parsedHeroes[recentMatch.hero_id].img)}`" >
+        </li>
+      </ul>
+    </div>
+    <hr>
+    <div style="overflow: auto">
+      <h2>Matches:</h2>
+      <ul style="display: flex">
+        <li v-for="(match, id) of matches" :key="id">
+          <p>{{ match }}</p>
+        </li>
+      </ul>
+    </div>
+    <hr>
+    <div style="overflow: auto">
+      <h2>Heroes Played:</h2>
+      <ul style="display: flex">
+        <li v-for="(userHero, id) of userHeroes" :key="id">
+          <p>{{ userHero }}</p>
+        </li>
+      </ul>
+      <!-- <pre>{{ userHeroes }}</pre> -->
     </div>
   </div>
 </template>
@@ -30,43 +71,79 @@
 <script>
 import { mapGetters } from 'vuex'
 import jsonGameMode from '@/json/gameModes.json'
-import jsonHeroes from '@/json/heroes.json'
 
 export default {
   name: 'Profile',
   data () {
     return {
+      baseUrl: 'https://api.opendota.com/api',
       dotaId: '', // rank 58 100594231  ... rank 8 91369376
       userData: {
         steamUrl: '',
         lastLogin: '',
         avatarUrl: '',
         personaName: '',
-        rankTier: '',
-        wins: '',
-        losses: '',
+        rankTier: Number,
         soloMmr: '',
         partyMmr: '',
         leaderboardRank: ''
       },
-      recentMatches: {},
+      winloss: '',
+      matches: '',
+      recentMatches: '',
       gameModes: jsonGameMode,
-      heroes: jsonHeroes
+      heroes: '',
+      friends: '',
+      userHeroes: ''
     }
   },
   methods: {
     submitDotaId () {
       this.$store.dispatch('getUserData', this.dotaId)
+      this.$store.dispatch('getHeroes')
+    },
+    objectParser (val) { // needed if array index != array[].id
+      let parsedObject = val
+      let arrayToObj = (array, keyField) =>
+        array.reduce((obj, item) => {
+          obj[item[keyField]] = item
+          return obj
+        }, {})
+      parsedObject = arrayToObj(parsedObject, 'id')
+      return parsedObject
+    },
+    imgHeroUrl (img) {
+      let x = 'https://api.opendota.com' + img
+      return x
+    },
+    team (val) {
+      return (val > 127 ? 'Dire' : 'Radiant')
+    },
+    gameResult (val, team) {
+      return ((team === 'Radiant' && val === 'true') || (team === 'Dire' && val === 'false') ? 'Won' : 'Lost')
+    },
+    durationCalc (val) {
+      val /= 60
+      let m = Math.floor(val)
+      let s = Math.ceil((val - Math.floor(val)) * 60)
+      return m + ':' + s
     }
+    // soloParty (val) {
+    //   return (val == 1 || val == null ? 'Solo' : 'Party')
+    // },
   },
   computed: {
     ...mapGetters({
       getUserData: 'getUserData',
       getUserWL: 'getUserWL',
-      getRecentMatches: 'getRecentMatches'
+      getMatches: 'getMatches',
+      getRecentMatches: 'getRecentMatches',
+      getHeroes: 'getHeroes',
+      getFriends: 'getFriends',
+      getUserHeroes: 'getUserHeroes'
     }),
     splitRankTier () {
-      return (this.userData.rankTier / 10).toFixed(1).split('.')
+      return this.rankTier || isNaN(this.rankTier) ? [0, 0] : (this.rankTier / 10).toFixed(1).split('.')
     },
     imgRankUrl () {
       let medal = this.splitRankTier[0].toString()
@@ -84,19 +161,12 @@ export default {
       return (star < 1 ? false : imgTierSrc('./' + 'rank_star_' + star + '.png'))
     },
     winrateCalc () {
-      let totalMatches = this.userData.wins + this.userData.losses
-      let rate = ((this.userData.wins / totalMatches) * 100).toFixed(2)
+      let totalMatches = this.wins + this.losses
+      let rate = ((this.wins / totalMatches) * 100).toFixed(2)
       return totalMatches > 0 ? rate : ''
     },
     parsedHeroes () {
-      let heroesObject = this.heroes
-      let arrayToObj = (array, keyField) =>
-        array.reduce((obj, item) => {
-          obj[item[keyField]] = item
-          return obj
-        }, {})
-      heroesObject = arrayToObj(heroesObject, 'id')
-      return heroesObject
+      return this.objectParser(this.heroes)
     }
   },
   watch: {
@@ -111,11 +181,22 @@ export default {
       this.userData.leaderboardRank = val.leaderboardRank
     },
     getUserWL (val) {
-      this.userData.wins = val.win
-      this.userData.losses = val.lose
+      this.winloss = val
+    },
+    getMatches (val) {
+      this.matches = val
     },
     getRecentMatches (val) {
       this.recentMatches = val
+    },
+    getHeroes (val) {
+      this.heroes = val
+    },
+    getFriends (val) {
+      this.friends = val
+    },
+    getUserHeroes (val) {
+      this.userHeroes = val
     }
   }
 }
