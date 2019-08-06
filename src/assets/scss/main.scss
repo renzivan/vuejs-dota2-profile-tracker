@@ -1,0 +1,15 @@
+body {
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #3a5f67;
+  color: #ffffff;
+}
+
+#header {
+  height: 100px;
+  background: rgba(0, 0, 0, .4);
+  h1 span {
+    font-weight: 400;
+  }
+}

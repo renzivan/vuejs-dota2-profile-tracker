@@ -21,6 +21,9 @@ npm install vuex
 # Install axios
 npm install axios
 
+# Install Sass: create main.scss, and import in main.js
+npm install node-sass sass-loader --save-dev
+
 # Run application
 npm run serve
 

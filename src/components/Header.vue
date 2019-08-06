@@ -1,9 +1,6 @@
 <template>
   <div id="header">
-    <ul>
-      <li>Overview</li>
-      <li>Matches</li>
-    </ul>
+    <h1>DOTA<span>NERF</span></h1>
   </div>
 </template>
 

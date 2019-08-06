@@ -203,16 +203,4 @@ export default {
 </script>
 
 <style scoped>
-#profile {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-
-#profile pre {
-  text-align: left;
-}
 </style>
