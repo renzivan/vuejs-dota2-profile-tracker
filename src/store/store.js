@@ -9,12 +9,20 @@ export const store = new Vuex.Store({
   state: {
     userData: null,
     winloss: null,
-    recentMatches: null
+    matches: null,
+    recentMatches: null,
+    heroes: null,
+    friends: null,
+    userHeroes: null
   },
   getters: {
     getUserData: state => state.userData,
     getUserWL: state => state.winloss,
-    getRecentMatches: state => state.recentMatches
+    getMatches: state => state.matches,
+    getRecentMatches: state => state.recentMatches,
+    getHeroes: state => state.heroes,
+    getFriends: state => state.friends,
+    getUserHeroes: state => state.userHeroes
   },
   mutations: {
     getUserData (state, payload) {
@@ -31,14 +39,22 @@ export const store = new Vuex.Store({
       }
     },
     getUserWL (state, payload) {
-      let res = payload.data
-      state.winloss = {
-        win: res.win,
-        lose: res.lose
-      }
+      state.winloss = payload.data
+    },
+    getMatches (state, payload) {
+      state.matches = payload.data
     },
     getRecentMatches (state, payload) {
       state.recentMatches = payload.data
+    },
+    getHeroes (state, payload) {
+      state.heroes = payload.data
+    },
+    getFriends (state, payload) {
+      state.friends = payload.data
+    },
+    getUserHeroes (state, payload) {
+      state.userHeroes = payload.data
     }
   },
   actions: {
@@ -47,7 +63,10 @@ export const store = new Vuex.Store({
       xhr.then((res) => {
         commit('getUserData', res)
         dispatch('getUserWL', dotaId)
+        dispatch('getMatches', dotaId)
         dispatch('getRecentMatches', dotaId)
+        dispatch('getFriends', dotaId)
+        dispatch('getUserHeroes', dotaId)
       }).catch((err) => {
         console.log(err)
       })
@@ -60,10 +79,42 @@ export const store = new Vuex.Store({
         console.log(err)
       })
     },
+    getMatches ({ commit }, dotaId) {
+      let xhr = httpReq.getMatches(dotaId)
+      xhr.then((res) => {
+        commit('getMatches', res)
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
     getRecentMatches ({ commit }, dotaId) {
       let xhr = httpReq.getRecentMatches(dotaId)
       xhr.then((res) => {
         commit('getRecentMatches', res)
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
+    getHeroes ({ commit }) {
+      let xhr = httpReq.getHeroes()
+      xhr.then((res) => {
+        commit('getHeroes', res)
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
+    getFriends ({ commit }, dotaId) {
+      let xhr = httpReq.getFriends(dotaId)
+      xhr.then((res) => {
+        commit('getFriends', res)
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
+    getUserHeroes ({ commit }, dotaId) {
+      let xhr = httpReq.getUserHeroes(dotaId)
+      xhr.then((res) => {
+        commit('getUserHeroes', res)
       }).catch((err) => {
         console.log(err)
       })
