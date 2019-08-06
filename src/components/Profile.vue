@@ -83,7 +83,7 @@ export default {
         lastLogin: '',
         avatarUrl: '',
         personaName: '',
-        rankTier: Number,
+        rankTier: '',
         soloMmr: '',
         partyMmr: '',
         leaderboardRank: ''
@@ -143,7 +143,7 @@ export default {
       getUserHeroes: 'getUserHeroes'
     }),
     splitRankTier () {
-      return this.rankTier || isNaN(this.rankTier) ? [0, 0] : (this.rankTier / 10).toFixed(1).split('.')
+      return (this.userData.rankTier / 10).toFixed(1).split('.')
     },
     imgRankUrl () {
       let medal = this.splitRankTier[0].toString()
