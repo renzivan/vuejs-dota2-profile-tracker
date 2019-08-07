@@ -31,43 +31,43 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   #header {
     height: 100px;
     /* background: rgba(0, 0, 0, .4); */
     background: #23393e;
     position: fixed;
     width: 100%;
-  }
-  h1 {
-    font-size: 50px;
-    font-weight: bold;
-    color: #3b5f67;
-    padding-top: 20px;
-  }
-  h1 span {
-    font-weight: 100;
-    color: #fff;
-  }
-  #searchInput {
-    background: #3a5f67;
-    border-radius: 0;
-    border: 0;
-    color: #ccc;
-    height: 50px;
-    margin-top: 25px;
-  }
-  button {
-    background: #152225;
-    background-image: url('../assets/images/search-white.png');
-    background-repeat: no-repeat;
-    background-size: 25px 25px;
-    background-position: center;
-    border: 0;
-    width: 50px;
-    height: 50px;
-    margin-top: -50px;
-    position: absolute;
-    right: 15px;
+    h1 {
+      font-size: 50px;
+      font-weight: bold;
+      color: #3b5f67;
+      padding-top: 20px;
+      span {
+        font-weight: 100;
+        color: #fff;
+      }
+    }
+    #searchInput {
+      background: #3a5f67;
+      border-radius: 0;
+      border: 0;
+      color: #ccc;
+      height: 50px;
+      margin-top: 25px;
+    }
+    button {
+      background: #152225;
+      background-image: url('../assets/images/search-white.png');
+      background-repeat: no-repeat;
+      background-size: 25px 25px;
+      background-position: center;
+      border: 0;
+      width: 50px;
+      height: 50px;
+      margin-top: -50px;
+      position: absolute;
+      right: 15px;
+    }
   }
 </style>
