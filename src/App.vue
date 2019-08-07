@@ -1,25 +1,20 @@
 <template>
-    <b-container fluid id="main-container">
-      <Header />
-      <Profile />
-    </b-container>
+  <div id="app">
+    <router-view/>
+  </div>
 </template>
 
 <script>
-import Header from './components/Header'
-import Profile from './components/Profile'
-
 export default {
-  name: 'app',
-  components: {
-    Header,
-    Profile
-  }
+  name: 'app'
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   #main-container {
     padding: 0px;
+    #content-container {
+      padding-top: 100px;
+    }
   }
 </style>

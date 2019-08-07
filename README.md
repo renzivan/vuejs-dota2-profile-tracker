@@ -4,7 +4,19 @@
 [OpenDota API Documentation](https://docs.opendota.com)
 [Game Modes](https://github.com/odota/dotaconstants/blob/master/json/game_mode.json)
 
-### Getting started from scratch
+### Getting Started
+```bash
+# Clone Repository
+git clone https://renzivan@bitbucket.org/renzivan/dota-2-web-app-using-vue.js.git
+
+# Install all dependencies
+npm install
+
+# Run project
+npm run serve
+```
+
+### Installed Dependencies
 ```bash
 # Install the Vue CLI
 npm install -g @vue/cli
@@ -24,15 +36,14 @@ npm install axios
 # Install Sass: create main.scss, and import in main.js
 npm install node-sass sass-loader --save-dev
 
-# Install Bootstrap Vue: 
-  #import BootstrapVue from 'bootstrap-vue'
-  #import 'bootstrap/dist/css/bootstrap.css'
-  #import 'bootstrap-vue/dist/bootstrap-vue.css'
+# Install Bootstrap Vue
 npm install bootstrap-vue bootstrap
-
-# Run application
-npm run serve
 
 ```
 
+### Issues
+I have this error : Module build failed (from ./node_modules/sass-loader/lib/loader.js):
+```npm rebuild node-sass```
+
 [Bootstrap-Vue Documentation](https://bootstrap-vue.js.org/docs)
+
