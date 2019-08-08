@@ -5,7 +5,7 @@
       <ul style="display: flex">
         <li v-for="(friend, id) of friends" :key="id">
           <p>{{ friend.personaname }}</p>
-          <img :src="`${ friend.avatarfull }`" >
+          <img :src="`${ friend.avatar }`" >
           <p>last_played: {{ friend.last_played }}</p>
           <p>games: {{ friend.games }}</p>
           <p>wins: {{ friend.wins }}</p>

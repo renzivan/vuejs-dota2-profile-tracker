@@ -1,11 +1,11 @@
 <template>
-  <div id="viewMatches">
+  <div id="viewHeroes">
     <b-container fluid id="main-container">
       <Header />
       <b-container id="content-container">
         <Profile />
         <Navigation />
-        <Matches />
+        <HeroesPlayed />
       </b-container>
     </b-container>
   </div>
@@ -15,15 +15,15 @@
 import Header from '@/components/Header'
 import Navigation from '@/components/Navigation'
 import Profile from '@/components/Profile'
-import Matches from '@/components/Matches'
+import HeroesPlayed from '@/components/HeroesPlayed'
 
 export default {
-  name: 'ViewMatches',
+  name: 'ViewHeroes',
   components: {
     Header,
     Profile,
     Navigation,
-    Matches
+    HeroesPlayed
   }
 }
 </script>

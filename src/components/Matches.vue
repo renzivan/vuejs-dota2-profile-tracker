@@ -57,7 +57,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getRecentMatches: 'getRecentMatches',
+      getMatches: 'getMatches',
       getHeroes: 'getHeroes'
     }),
     parsedHeroes () {
