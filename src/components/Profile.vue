@@ -1,80 +1,40 @@
 <template>
   <div id="profile">
-    <br>
-    <div style="overflow: auto; display: flex">
-      <b-img thumbnail :src="`${userData.avatarUrl}`" id="profile-avatar"/>
-      <p>Wins: {{ winloss.win }} | Losses: {{ winloss.lose }} | Winrate: {{ winrateCalc }} </p>
-      <p>Steam URL: {{ userData.steamUrl }} </p>
-      <p>Last Login: {{ userData.lastLogin }}</p>
-      <h3>{{ userData.personaName }}</h3>
-      <p>Solo MMR: {{ userData.soloMmr }}</p>
-      <p>Party MMR: {{ userData.partyMmr }}</p>
-      <p>Leaderboard: {{ userData.leaderboardRank }}</p>
-      <img :src="imgRankUrl">
-      <img :src="imgTierUrl">
-    </div>
-    <hr>
-    <div style="overflow: auto">
-      <h2>Friends</h2>
-      <ul style="display: flex">
-        <li v-for="(friend, id) of friends" :key="id">
-          <p>{{ friend.personaname }}</p>
-          <img :src="`${ friend.avatar }`" >
-          <p>last_played: {{ friend.last_played }}</p>
-          <p>games: {{ friend.games }}</p>
-          <p>wins: {{ friend.wins }}</p>
-        </li>
-      </ul>
-    </div>
-    <hr>
-    <div style="overflow: auto">
-      <h2>Recent Matches:</h2>
-      <ul style="display: flex">
-        <li v-for="(recentMatch, id) of recentMatches" :key="id">
-          <p>match_id: {{ recentMatch.match_id }} | party: {{ recentMatch.party_size }} </p>
-          <!-- <p>Solo or Party: {{ soloParty(`${match.party_size}`) }}</p> -->
-          <p>Duration: {{ durationCalc(`${recentMatch.duration}`) }}</p>
-          <p>Hero: {{ parsedHeroes[recentMatch.hero_id].localized_name }}</p>
-          <p>Game Mode: {{ gameModes[recentMatch.game_mode].localized_name }}</p>
-          <p>KDA: {{ recentMatch.kills }}/{{ recentMatch.deaths }}/{{ recentMatch.assists }}</p>
-          <p>Team: {{ team(`${recentMatch.player_slot}`) }}</p>
-          <p>Result: {{ gameResult(`${recentMatch.radiant_win}`,team(`${recentMatch.player_slot}`)) }}</p>
-          <img :src="`${imgHeroUrl(parsedHeroes[recentMatch.hero_id].img)}`" >
-        </li>
-      </ul>
-    </div>
-    <hr>
-    <div style="overflow: auto">
-      <h2>Matches:</h2>
-      <ul style="display: flex">
-        <li v-for="(match, id) of matches" :key="id">
-          <p>{{ match }}</p>
-        </li>
-      </ul>
-    </div>
-    <hr>
-    <div style="overflow: auto">
-      <h2>Heroes Played:</h2>
-      <ul style="display: flex">
-        <li v-for="(userHero, id) of userHeroes" :key="id">
-          <p>{{ userHero }}</p>
-        </li>
-      </ul>
-      <!-- <pre>{{ userHeroes }}</pre> -->
+    <div id="profile-wrap">
+      <div class="left">
+        <b-img rounded :src="`${userData.avatarUrl}`" id="profile-avatar"/>
+        <div class="left-inner">
+          <p class="profile-name">{{ userData.personaName }}</p>
+          <a class="profile-steamurl" :href="`${userData.steamUrl}`">Steam profile</a>
+          <div class="mmr">
+            <p class="profile-solo">Solo MMR<span>{{ userData.soloMmr }}</span></p>
+            <p class="profile-party">Party MMR<span>{{ userData.partyMmr }}</span></p>
+          </div>
+          <div class="wl">
+            <p class="wl-win">Wins<span>{{ winloss.win }}</span></p>
+            <p class="wl-loss">Losses<span>{{ winloss.lose }}</span></p>
+            <p class="wl-rate">Winrate<span>{{ winrateCalc }}%</span></p>
+          </div>
+          <!-- <p class="profile-lastlogin">Last Login: {{ userData.lastLogin }}</p> -->
+        </div>
+      </div>
+      <div class="right">
+        <img v-show="splitRankTier[0] < 8" :src="imgTierUrl" class="stars">
+        <img :src="imgRankUrl" class="medal">
+        <p v-show="userData.leaderboardRank !== null" class="leaderboard">{{ userData.leaderboardRank }}</p>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import jsonGameMode from '@/json/gameModes.json'
 
 export default {
   name: 'Profile',
   data () {
     return {
       baseUrl: 'https://api.opendota.com/api',
-      // dotaId: '', // rank 58 100594231  ... rank 8 91369376
       userData: {
         steamUrl: '',
         lastLogin: '',
@@ -85,55 +45,13 @@ export default {
         partyMmr: '',
         leaderboardRank: ''
       },
-      winloss: '',
-      matches: '',
-      recentMatches: '',
-      gameModes: jsonGameMode,
-      heroes: '',
-      friends: '',
-      userHeroes: ''
+      winloss: ''
     }
-  },
-  methods: {
-    objectParser (val) { // needed if array index != array[].id
-      let parsedObject = val
-      let arrayToObj = (array, keyField) =>
-        array.reduce((obj, item) => {
-          obj[item[keyField]] = item
-          return obj
-        }, {})
-      parsedObject = arrayToObj(parsedObject, 'id')
-      return parsedObject
-    },
-    imgHeroUrl (img) {
-      let x = 'https://api.opendota.com' + img
-      return x
-    },
-    team (val) {
-      return (val > 127 ? 'Dire' : 'Radiant')
-    },
-    gameResult (val, team) {
-      return ((team === 'Radiant' && val === 'true') || (team === 'Dire' && val === 'false') ? 'Won' : 'Lost')
-    },
-    durationCalc (val) {
-      val /= 60
-      let m = Math.floor(val)
-      let s = Math.ceil((val - Math.floor(val)) * 60)
-      return m + ':' + s
-    }
-    // soloParty (val) {
-    //   return (val == 1 || val == null ? 'Solo' : 'Party')
-    // },
   },
   computed: {
     ...mapGetters({
       getUserData: 'getUserData',
-      getUserWL: 'getUserWL',
-      getMatches: 'getMatches',
-      getRecentMatches: 'getRecentMatches',
-      getHeroes: 'getHeroes',
-      getFriends: 'getFriends',
-      getUserHeroes: 'getUserHeroes'
+      getUserWL: 'getUserWL'
     }),
     splitRankTier () {
       return (this.userData.rankTier / 10).toFixed(1).split('.')
@@ -154,12 +72,9 @@ export default {
       return (star < 1 ? false : imgTierSrc('./' + 'rank_star_' + star + '.png'))
     },
     winrateCalc () {
-      let totalMatches = this.wins + this.losses
-      let rate = ((this.wins / totalMatches) * 100).toFixed(2)
+      let totalMatches = this.winloss.win + this.winloss.lose
+      let rate = ((this.winloss.win / totalMatches) * 100).toFixed(2)
       return totalMatches > 0 ? rate : ''
-    },
-    parsedHeroes () {
-      return this.objectParser(this.heroes)
     }
   },
   watch: {
@@ -175,29 +90,79 @@ export default {
     },
     getUserWL (val) {
       this.winloss = val
-    },
-    getMatches (val) {
-      this.matches = val
-    },
-    getRecentMatches (val) {
-      this.recentMatches = val
-    },
-    getHeroes (val) {
-      this.heroes = val
-    },
-    getFriends (val) {
-      this.friends = val
-    },
-    getUserHeroes (val) {
-      this.userHeroes = val
     }
   }
 }
 </script>
 
-<style scoped>
-#profile-avatar {
-  width: auto;
-  height: 200px;
+<style lang="scss" scoped>
+#profile {
+  background: #23393e;
+  margin-top: 15px;
+  padding: 35px;
+  height: 270px;
+  #profile-wrap {
+    display: flex;
+    justify-content: space-between;
+    .left {
+      display: flex;
+    }
+    .right {
+      .stars {
+        position: absolute;
+      }
+      .leaderboard {
+        position: relative;
+        top: -52px;
+        text-align: center;
+        font-size: 24px;
+      }
+    }
+  }
+  .left-inner {
+    line-height: 1;
+    margin-left: 40px;
+    display: grid;
+    .profile-name {
+      font-size: 60px;
+    }
+    .profile-steamurl {
+      background-image: url('../assets/images/steam.png');
+      background-repeat: no-repeat;
+      background-size: 18px;
+      padding-left: 20px;
+      font-size: 13px;
+      text-transform: uppercase;
+      color: #fff;
+      margin-top: -5px;
+      padding-top: 3px;
+    }
+    .mmr, .wl {
+      display: flex;
+
+      .profile-solo, .profile-party, .wl-win, .wl-loss, .wl-rate {
+        font-size: 13px;
+        text-transform: uppercase;
+        display: grid;
+        span {
+          font-size: 22px;
+          margin-top: -7px;
+        }
+      }
+      .profile-party, .wl-loss, .wl-rate {
+        margin-left: 20px;
+      }
+      .wl-win span {
+        color: #50a654;
+      }
+      .wl-loss span {
+        color: #e3323a;
+      }
+    }
+  }
+  img {
+    width: 200px;
+    height: 200px;
+  }
 }
 </style>

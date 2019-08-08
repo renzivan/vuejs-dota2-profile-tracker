@@ -5,6 +5,30 @@ body {
   background: #3a5f67;
   color: #ffffff;
 }
+ul {
+  li {
+    list-style-type: none;
+  }
+}
+p {
+  margin: 0;
+}
 
-#header {
+#main-container {
+  padding: 0px;
+  #content-container {
+    padding-top: 100px;
+    .inner-container {
+      background: rgba(0,0,0,0.4);
+      margin: 0;
+      padding: 10px 0;
+      h2 {
+        font-size: 22px;
+        text-transform: uppercase;
+      }
+      .content-data {
+        background: rgba(0,0,0,0.4);
+      }
+    }
+  }
 }
