@@ -13,7 +13,10 @@ import routes from './routes.js'
 Vue.config.productionTip = false
 
 Vue.use(VueRouter)
-const router = new VueRouter({ mode: 'history', routes })
+const router = new VueRouter({
+  mode: 'history',
+  routes
+})
 
 Vue.use(BootstrapVue)
 

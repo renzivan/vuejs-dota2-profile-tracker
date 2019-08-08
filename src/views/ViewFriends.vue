@@ -5,7 +5,6 @@
       <b-container id="content-container">
         <Profile />
         <Navigation />
-        <Matches />
         <Friends />
       </b-container>
     </b-container>
