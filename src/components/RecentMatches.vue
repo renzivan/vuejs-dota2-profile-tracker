@@ -2,17 +2,23 @@
   <div id="recentMatches">
     <h2>Recent Matches</h2>
     <div class="content-data" style="overflow: auto">
-      <ul style="display: flex">
+      <ul class="recentMatches-header">
+        <li>Hero</li>
+        <li>Result</li>
+        <li>Mode</li>
+        <li>Duration</li>
+        <li>KDA</li>
+      </ul>
+      <ul class="recentMatches-data">
         <li v-for="(recentMatch, id) of recentMatches" :key="id">
-          <p>match_id: {{ recentMatch.match_id }} | party: {{ recentMatch.party_size }} </p>
-          <!-- ##<p>Solo or Party: {{ soloParty(`${match.party_size}`) }}</p> -->
-          <p>Duration: {{ durationCalc(`${recentMatch.duration}`) }}</p>
-          <p>Hero: {{ parsedHeroes[recentMatch.hero_id].localized_name }}</p>
-          <p>Game Mode: {{ gameModes[recentMatch.game_mode].localized_name }}</p>
-          <p>KDA: {{ recentMatch.kills }}/{{ recentMatch.deaths }}/{{ recentMatch.assists }}</p>
-          <p>Team: {{ team(`${recentMatch.player_slot}`) }}</p>
-          <p>Result: {{ gameResult(`${recentMatch.radiant_win}`,team(`${recentMatch.player_slot}`)) }}</p>
           <img :src="`${imgHeroUrl(parsedHeroes[recentMatch.hero_id].img)}`" >
+          <p>{{ parsedHeroes[recentMatch.hero_id].localized_name }}</p>
+          <p>{{ gameResult(`${recentMatch.radiant_win}`,team(`${recentMatch.player_slot}`)) }}</p>
+          <p>{{ gameModes[recentMatch.game_mode].localized_name }}</p>
+          <p>{{ durationCalc(`${recentMatch.duration}`) }}</p>
+          <p>{{ team(`${recentMatch.player_slot}`) }}</p>
+          <!-- <p>match_id: {{ recentMatch.match_id }} | party: {{ recentMatch.party_size }} </p> -->
+          <p>{{ recentMatch.kills }}/{{ recentMatch.deaths }}/{{ recentMatch.assists }}</p>
         </li>
       </ul>
     </div>
@@ -86,5 +92,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+  .recentMatches-header {
+    display: flex;
+  }
+  .recentMatches-data {
+    li {
+      display: flex;
+      img {
+        width: 55px;
+        height: 31px;
+      }
+    }
+  }
 </style>
