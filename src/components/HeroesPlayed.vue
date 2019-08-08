@@ -1,7 +1,7 @@
 <template>
   <div id="heroesPlayed">
-    <div style="overflow: auto">
-      <h2>Heroes Played:</h2>
+    <h2>Heroes Played</h2>
+    <div class="content-data" style="overflow: auto">
       <ul style="display: flex">
         <li v-for="(userHero, id) of userHeroes" :key="id">
           <p>{{ userHero }}</p>

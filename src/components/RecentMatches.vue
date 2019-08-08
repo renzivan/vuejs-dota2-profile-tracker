@@ -1,7 +1,7 @@
 <template>
   <div id="recentMatches">
-    <div style="overflow: auto">
-      <h2>Recent Matches:</h2>
+    <h2>Recent Matches</h2>
+    <div class="content-data" style="overflow: auto">
       <ul style="display: flex">
         <li v-for="(recentMatch, id) of recentMatches" :key="id">
           <p>match_id: {{ recentMatch.match_id }} | party: {{ recentMatch.party_size }} </p>

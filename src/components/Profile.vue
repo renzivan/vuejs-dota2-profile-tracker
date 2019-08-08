@@ -4,11 +4,18 @@
       <div class="left">
         <b-img rounded :src="`${userData.avatarUrl}`" id="profile-avatar"/>
         <div class="left-inner">
-          <p>{{ userData.personaName }}</p>
-          <a :href="`${userData.steamUrl}`">Steam URL</a>
-          <p>Wins: {{ winloss.win }} | Losses: {{ winloss.lose }} | Winrate: {{ winrateCalc }} </p>
-          <p>Last Login: {{ userData.lastLogin }}</p>
-          <p>Solo MMR: {{ userData.soloMmr }} Party MMR: {{ userData.partyMmr }}</p>
+          <p class="profile-name">{{ userData.personaName }}</p>
+          <a class="profile-steamurl" :href="`${userData.steamUrl}`">Steam profile</a>
+          <div class="mmr">
+            <p class="profile-solo">Solo MMR<span>{{ userData.soloMmr }}</span></p>
+            <p class="profile-party">Party MMR<span>{{ userData.partyMmr }}</span></p>
+          </div>
+          <div class="wl">
+            <p class="wl-win">Wins<span>{{ winloss.win }}</span></p>
+            <p class="wl-loss">Losses<span>{{ winloss.lose }}</span></p>
+            <p class="wl-rate">Winrate<span>{{ winrateCalc }}%</span></p>
+          </div>
+          <!-- <p class="profile-lastlogin">Last Login: {{ userData.lastLogin }}</p> -->
         </div>
       </div>
       <div class="right">
@@ -65,8 +72,8 @@ export default {
       return (star < 1 ? false : imgTierSrc('./' + 'rank_star_' + star + '.png'))
     },
     winrateCalc () {
-      let totalMatches = this.wins + this.losses
-      let rate = ((this.wins / totalMatches) * 100).toFixed(2)
+      let totalMatches = this.winloss.win + this.winloss.lose
+      let rate = ((this.winloss.win / totalMatches) * 100).toFixed(2)
       return totalMatches > 0 ? rate : ''
     }
   },
@@ -109,6 +116,47 @@ export default {
         top: -52px;
         text-align: center;
         font-size: 24px;
+      }
+    }
+  }
+  .left-inner {
+    line-height: 1;
+    margin-left: 40px;
+    display: grid;
+    .profile-name {
+      font-size: 60px;
+    }
+    .profile-steamurl {
+      background-image: url('../assets/images/steam.png');
+      background-repeat: no-repeat;
+      background-size: 18px;
+      padding-left: 20px;
+      font-size: 13px;
+      text-transform: uppercase;
+      color: #fff;
+      margin-top: -5px;
+      padding-top: 3px;
+    }
+    .mmr, .wl {
+      display: flex;
+
+      .profile-solo, .profile-party, .wl-win, .wl-loss, .wl-rate {
+        font-size: 13px;
+        text-transform: uppercase;
+        display: grid;
+        span {
+          font-size: 22px;
+          margin-top: -7px;
+        }
+      }
+      .profile-party, .wl-loss, .wl-rate {
+        margin-left: 20px;
+      }
+      .wl-win span {
+        color: #50a654;
+      }
+      .wl-loss span {
+        color: #e3323a;
       }
     }
   }

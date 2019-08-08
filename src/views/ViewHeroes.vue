@@ -5,7 +5,9 @@
       <b-container id="content-container">
         <Profile />
         <Navigation />
-        <HeroesPlayed />
+        <b-row class="inner-container">
+          <b-col><HeroesPlayed /></b-col>
+        </b-row>
       </b-container>
     </b-container>
   </div>
@@ -29,5 +31,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>
