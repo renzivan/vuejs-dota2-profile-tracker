@@ -1,7 +1,7 @@
 <template>
   <div id="friends">
-    <div style="overflow: auto">
       <h2>Friends</h2>
+    <div class="content-data" style="overflow: auto">
       <ul style="display: flex">
         <li v-for="(friend, id) of friends" :key="id">
           <p>{{ friend.personaname }}</p>

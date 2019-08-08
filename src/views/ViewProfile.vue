@@ -5,9 +5,11 @@
       <b-container id="content-container">
         <Profile />
         <Navigation />
-        <RecentMatches />
-        <HeroesPlayed />
-        <Friends />
+        <b-row class="inner-container">
+          <b-col cols="6"><RecentMatches /></b-col>
+          <b-col cols="3"><HeroesPlayed /></b-col>
+          <b-col cols="3"><Friends /></b-col>
+        </b-row>
       </b-container>
     </b-container>
   </div>
