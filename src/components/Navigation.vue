@@ -38,8 +38,7 @@ export default {
       padding: 5px 1rem;
       padding-bottom: 7px;
       &:hover {
-        color: #00ffd2;
-        border-bottom: 3px solid #00ffd2;
+        color: #29af97;
         text-decoration: none;
       }
     }

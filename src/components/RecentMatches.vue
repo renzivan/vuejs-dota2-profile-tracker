@@ -92,12 +92,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .recentMatches-header {
-    display: flex;
+  ul {
+    padding-left: 10px;
   }
-  .recentMatches-data {
+  .content-data {
+    margin-right: 7px;
+  }
+  ul.recentMatches-header {
+    display: flex;
+    text-transform: uppercase;
+    font-size: 13px;
+    padding: 15px 10px;
+    margin-bottom: 0;
+    border-bottom: 1px solid #3a5f67;
+  }
+  ul.recentMatches-data {
     li {
       display: flex;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #22393f;
       img {
         width: 56px;
         height: 32px;
