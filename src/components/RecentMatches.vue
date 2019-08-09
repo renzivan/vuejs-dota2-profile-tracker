@@ -65,7 +65,7 @@ export default {
       val /= 60
       let m = Math.floor(val)
       let s = Math.ceil((val - Math.floor(val)) * 60)
-      return m + ':' + s
+      return s < 10 ? m + ':0' + s : m + ':' + s
     }
     // soloParty (val) {
     //   return (val == 1 || val == null ? 'Solo' : 'Party')
@@ -99,8 +99,8 @@ export default {
     li {
       display: flex;
       img {
-        width: 55px;
-        height: 31px;
+        width: 56px;
+        height: 32px;
       }
     }
   }
