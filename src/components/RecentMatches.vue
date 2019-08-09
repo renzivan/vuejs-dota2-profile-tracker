@@ -1,18 +1,24 @@
 <template>
   <div id="recentMatches">
-    <div style="overflow: auto">
-      <h2>Recent Matches:</h2>
-      <ul style="display: flex">
+    <h2>Recent Matches</h2>
+    <div class="content-data" style="overflow: auto">
+      <ul class="recentMatches-header">
+        <li>Hero</li>
+        <li>Result</li>
+        <li>Mode</li>
+        <li>Duration</li>
+        <li>KDA</li>
+      </ul>
+      <ul class="recentMatches-data">
         <li v-for="(recentMatch, id) of recentMatches" :key="id">
-          <p>match_id: {{ recentMatch.match_id }} | party: {{ recentMatch.party_size }} </p>
-          <!-- ##<p>Solo or Party: {{ soloParty(`${match.party_size}`) }}</p> -->
-          <p>Duration: {{ durationCalc(`${recentMatch.duration}`) }}</p>
-          <p>Hero: {{ parsedHeroes[recentMatch.hero_id].localized_name }}</p>
-          <p>Game Mode: {{ gameModes[recentMatch.game_mode].localized_name }}</p>
-          <p>KDA: {{ recentMatch.kills }}/{{ recentMatch.deaths }}/{{ recentMatch.assists }}</p>
-          <p>Team: {{ team(`${recentMatch.player_slot}`) }}</p>
-          <p>Result: {{ gameResult(`${recentMatch.radiant_win}`,team(`${recentMatch.player_slot}`)) }}</p>
           <img :src="`${imgHeroUrl(parsedHeroes[recentMatch.hero_id].img)}`" >
+          <p>{{ parsedHeroes[recentMatch.hero_id].localized_name }}</p>
+          <p>{{ gameResult(`${recentMatch.radiant_win}`,team(`${recentMatch.player_slot}`)) }}</p>
+          <p>{{ gameModes[recentMatch.game_mode].localized_name }}</p>
+          <p>{{ durationCalc(`${recentMatch.duration}`) }}</p>
+          <p>{{ team(`${recentMatch.player_slot}`) }}</p>
+          <!-- <p>match_id: {{ recentMatch.match_id }} | party: {{ recentMatch.party_size }} </p> -->
+          <p>{{ recentMatch.kills }}/{{ recentMatch.deaths }}/{{ recentMatch.assists }}</p>
         </li>
       </ul>
     </div>
@@ -59,7 +65,7 @@ export default {
       val /= 60
       let m = Math.floor(val)
       let s = Math.ceil((val - Math.floor(val)) * 60)
-      return m + ':' + s
+      return s < 10 ? m + ':0' + s : m + ':' + s
     }
     // soloParty (val) {
     //   return (val == 1 || val == null ? 'Solo' : 'Party')
@@ -86,5 +92,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+  ul {
+    padding-left: 10px;
+  }
+  .content-data {
+    margin-right: 7px;
+  }
+  ul.recentMatches-header {
+    display: flex;
+    text-transform: uppercase;
+    font-size: 13px;
+    padding: 15px 10px;
+    margin-bottom: 0;
+    border-bottom: 1px solid #3a5f67;
+  }
+  ul.recentMatches-data {
+    li {
+      display: flex;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #22393f;
+      img {
+        width: 56px;
+        height: 32px;
+      }
+    }
+  }
 </style>

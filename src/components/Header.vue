@@ -3,10 +3,10 @@
     <b-container>
       <b-row>
         <b-col>
-          <h1 class="align-middle">DOTA<span>NERF</span></h1>
+          <router-link to="/" id="logo"><h1 class="align-middle">DOTA<span>NERF</span></h1></router-link>
         </b-col>
         <b-col>
-          <b-form-input id="searchInput" type="text" v-model="dotaId" @keyup.enter="submitDotaId" autofocus placeholder="Search players, matches..." />
+          <b-form-input id="searchInput" type="text" v-model="dotaId" @keyup.enter="submitDotaId" autofocus placeholder="Search players, matches..."/>
         <button @click="submitDotaId"></button>
         </b-col>
       </b-row>
@@ -26,6 +26,7 @@ export default {
     submitDotaId () {
       this.$store.dispatch('getUserData', this.dotaId)
       this.$store.dispatch('getHeroes')
+      this.$router.push('/profile/' + this.dotaId)
     }
   }
 }
@@ -39,6 +40,11 @@ export default {
     background: #23393e;
     position: fixed;
     width: 100%;
+    #logo {
+      &:hover {
+        text-decoration: none;
+      }
+    }
     h1 {
       font-size: 50px;
       font-weight: bold;
