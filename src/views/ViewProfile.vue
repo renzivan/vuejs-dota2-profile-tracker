@@ -5,18 +5,13 @@
       <b-container id="content-container">
         <Profile />
         <Navigation />
-        <!-- <b-row class="inner-container">
-          <b-col cols="6"><RecentMatches /></b-col>
-          <b-col cols="3"><HeroesPlayed /></b-col>
-          <b-col cols="3"><Friends /></b-col>
-        </b-row> -->
         <div class="inner-container">
           <div class="inner-data-1">
             <RecentMatches />
           </div>
           <div class="inner-data-2">
             <HeroesPlayed />
-            <Friends />
+            <Friends :friends="getFriends"/>
           </div>
         </div>
       </b-container>
@@ -25,6 +20,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Header from '@/components/Header'
 import Profile from '@/components/Profile'
 import Navigation from '@/components/Navigation'
@@ -34,6 +30,11 @@ import HeroesPlayed from '@/components/HeroesPlayed'
 
 export default {
   name: 'ViewProfile',
+  data () {
+    return {
+      friends: ''
+    }
+  },
   components: {
     Header,
     Profile,
@@ -41,6 +42,16 @@ export default {
     Friends,
     RecentMatches,
     HeroesPlayed
+  },
+  computed: {
+    ...mapGetters({
+      getFriends: 'getFriends'
+    })
+  },
+  watch: {
+    getFriends (val) {
+      this.friends = val
+    }
   }
 }
 </script>

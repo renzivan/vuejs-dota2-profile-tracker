@@ -2,7 +2,7 @@
   <div id="friends">
       <h2>Recent Friends Played With</h2>
     <div class="content-data" style="overflow: auto">
-      <ul class="friends-header">
+      <!-- <ul class="friends-header">
         <li>Player</li>
         <li>Matches</li>
         <li>Win %</li>
@@ -15,30 +15,18 @@
           <p>games: {{ friend.games }}</p>
           <p>wins: {{ friend.wins }}</p>
         </li>
-      </ul>
+      </ul> -->
+      <pre style="color: #fff;">{{ friends }}</pre>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 
 export default {
   name: 'Friends',
-  data () {
-    return {
-      friends: ''
-    }
-  },
-  computed: {
-    ...mapGetters({
-      getFriends: 'getFriends'
-    })
-  },
-  watch: {
-    getFriends (val) {
-      this.friends = val
-    }
+  props: {
+    friends: Array
   }
 }
 </script>
