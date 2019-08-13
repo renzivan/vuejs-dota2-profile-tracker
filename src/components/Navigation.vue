@@ -1,6 +1,6 @@
 <template>
   <div id="nav">
-    <!-- <h1>Dota ID: {{ $route.params.dotaId }}</h1> <button @click="submitDotaId">refresh</button> -->
+    <!-- <h1>Dota ID: {{ $route.params.dotaId }}</h1> <button @click="sendRequests">refresh</button> -->
     <b-nav>
       <li class="nav-item"><router-link :to="`/profile/${$route.params.dotaId}`">Overview</router-link></li>
       <li class="nav-item"><router-link :to="`/matches/${$route.params.dotaId}`">Matches</router-link></li>
@@ -21,10 +21,13 @@ export default {
     }
   },
   methods: {
-    submitDotaId () {
+    sendRequests () {
       this.$store.dispatch('getUserData', this.dotaId)
       this.$store.dispatch('getHeroes')
     }
+  },
+  beforeMount () {
+    this.sendRequests()
   }
 }
 </script>

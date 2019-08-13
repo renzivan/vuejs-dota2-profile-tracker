@@ -15,7 +15,7 @@
           <p>{{ parsedHeroes[recentMatch.hero_id].localized_name }}</p>
           <p>{{ gameResult(`${recentMatch.radiant_win}`,team(`${recentMatch.player_slot}`)) }}</p>
           <p>{{ gameModes[recentMatch.game_mode].localized_name }}</p>
-          <p>{{ durationCalc(`${recentMatch.duration}`) }}</p>
+          <p>{{ durationCalc(recentMatch.duration) }}</p>
           <p>{{ team(`${recentMatch.player_slot}`) }}</p>
           <!-- <p>match_id: {{ recentMatch.match_id }} | party: {{ recentMatch.party_size }} </p> -->
           <p>{{ recentMatch.kills }}/{{ recentMatch.deaths }}/{{ recentMatch.assists }}</p>
@@ -40,16 +40,6 @@ export default {
     }
   },
   methods: {
-    objectParser (val) { // needed if array index != array[].id
-      let parsedObject = val
-      let arrayToObj = (array, keyField) =>
-        array.reduce((obj, item) => {
-          obj[item[keyField]] = item
-          return obj
-        }, {})
-      parsedObject = arrayToObj(parsedObject, 'id')
-      return parsedObject
-    },
     imgHeroUrl (img) {
       let x = 'https://api.opendota.com' + img
       return x
@@ -71,8 +61,15 @@ export default {
     // },
   },
   computed: {
-    parsedHeroes () {
-      return this.objectParser(this.heroes)
+    parsedHeroes () { // needed if array index != array[].id
+      let parsedObject = this.heroes
+      let arrayToObj = (array, keyField) =>
+        array.reduce((obj, item) => {
+          obj[item[keyField]] = item
+          return obj
+        }, {})
+      parsedObject = arrayToObj(parsedObject, 'id')
+      return parsedObject
     }
   }
 }
