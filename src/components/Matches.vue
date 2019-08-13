@@ -12,16 +12,17 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import jsonGameMode from '@/json/gameModes.json'
 
 export default {
   name: 'Matches',
+  props: {
+    matches: Array,
+    heroes: Array
+  },
   data () {
     return {
-      matches: '',
-      gameModes: jsonGameMode,
-      heroes: ''
+      gameModes: jsonGameMode
     }
   },
   methods: {
@@ -56,20 +57,8 @@ export default {
     // },
   },
   computed: {
-    ...mapGetters({
-      getMatches: 'getMatches',
-      getHeroes: 'getHeroes'
-    }),
     parsedHeroes () {
       return this.objectParser(this.heroes)
-    }
-  },
-  watch: {
-    getMatches (val) {
-      this.matches = val
-    },
-    getHeroes (val) {
-      this.heroes = val
     }
   }
 }
