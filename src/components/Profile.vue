@@ -28,31 +28,14 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 
 export default {
   name: 'Profile',
-  data () {
-    return {
-      baseUrl: 'https://api.opendota.com/api',
-      userData: {
-        steamUrl: '',
-        lastLogin: '',
-        avatarUrl: '',
-        personaName: '',
-        rankTier: '',
-        soloMmr: '',
-        partyMmr: '',
-        leaderboardRank: ''
-      },
-      winloss: ''
-    }
+  props: {
+    userData: Object,
+    winloss: Object
   },
   computed: {
-    ...mapGetters({
-      getUserData: 'getUserData',
-      getUserWL: 'getUserWL'
-    }),
     splitRankTier () {
       return (this.userData.rankTier / 10).toFixed(1).split('.')
     },
@@ -75,21 +58,6 @@ export default {
       let totalMatches = this.winloss.win + this.winloss.lose
       let rate = ((this.winloss.win / totalMatches) * 100).toFixed(2)
       return totalMatches > 0 ? rate : ''
-    }
-  },
-  watch: {
-    getUserData (val) {
-      this.userData.steamUrl = val.steamUrl
-      this.userData.lastLogin = val.lastLogin
-      this.userData.avatarUrl = val.avatarUrl
-      this.userData.personaName = val.personaName
-      this.userData.rankTier = val.rankTier
-      this.userData.soloMmr = val.soloMmr
-      this.userData.partyMmr = val.partyMmr
-      this.userData.leaderboardRank = val.leaderboardRank
-    },
-    getUserWL (val) {
-      this.winloss = val
     }
   }
 }
