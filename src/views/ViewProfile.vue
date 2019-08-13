@@ -3,20 +3,27 @@
     <b-container fluid id="main-container">
       <Header />
       <b-container id="content-container">
-        <Profile />
+        <Profile
+          :userData="getUserData"
+          :winloss="getUserWL"
+          v-if="is_data_fetched"
+        />
         <Navigation />
-        <!-- <b-row class="inner-container">
-          <b-col cols="6"><RecentMatches /></b-col>
-          <b-col cols="3"><HeroesPlayed /></b-col>
-          <b-col cols="3"><Friends /></b-col>
-        </b-row> -->
         <div class="inner-container">
           <div class="inner-data-1">
-            <RecentMatches />
+            <RecentMatches
+              :recentMatches="getRecentMatches"
+              :heroes="getHeroes"
+            />
           </div>
           <div class="inner-data-2">
-            <HeroesPlayed />
-            <Friends />
+            <HeroesPlayed
+              :userHeroes="getUserHeroes"
+              :heroes="getHeroes"
+            />
+            <Friends
+              :friends="getFriends"
+            />
           </div>
         </div>
       </b-container>
@@ -25,6 +32,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Header from '@/components/Header'
 import Profile from '@/components/Profile'
 import Navigation from '@/components/Navigation'
@@ -34,6 +42,22 @@ import HeroesPlayed from '@/components/HeroesPlayed'
 
 export default {
   name: 'ViewProfile',
+  data () {
+    return {
+      // profile component
+      baseUrl: 'https://api.opendota.com/api',
+      userData: '',
+      winloss: '',
+      // friends component
+      friends: '',
+      // heroes component
+      userHeroes: '',
+      heroes: '',
+      // recentMatches component
+      recentMatches: '',
+      is_data_fetched: false
+    }
+  },
   components: {
     Header,
     Profile,
@@ -41,6 +65,42 @@ export default {
     Friends,
     RecentMatches,
     HeroesPlayed
+  },
+  computed: {
+    ...mapGetters({
+      // profile component
+      getUserData: 'getUserData',
+      getUserWL: 'getUserWL',
+      // friends component
+      getFriends: 'getFriends',
+      // heroes component
+      getUserHeroes: 'getUserHeroes',
+      getHeroes: 'getHeroes',
+      // recentMatches component
+      getRecentMatches: 'getRecentMatches'
+    })
+  },
+  watch: {
+    getUserData (val) {
+      this.userData = val
+      // val !== null ? this.is_data_fetched = true : this.is_data_fetched = false
+    },
+    getUserWL (val) {
+      this.winloss = val
+      val !== null ? this.is_data_fetched = true : this.is_data_fetched = false
+    },
+    getFriends (val) {
+      this.friends = val
+    },
+    getUserHeroes (val) {
+      this.userHeroes = val
+    },
+    getHeroes (val) {
+      this.heroes = val
+    },
+    getRecentMatches (val) {
+      this.recentMatches = val
+    }
   }
 }
 </script>

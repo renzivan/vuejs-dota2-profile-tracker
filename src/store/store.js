@@ -26,35 +26,32 @@ export const store = new Vuex.Store({
   },
   mutations: {
     getUserData (state, payload) {
-      let res = payload.data
-      state.userData = {
-        steamUrl: res.profile.profileurl,
-        lastLogin: res.profile.last_login,
-        avatarUrl: res.profile.avatarfull,
-        personaName: res.profile.personaname,
-        rankTier: res.rank_tier,
-        soloMmr: res.solo_competitive_rank,
-        partyMmr: res.competitive_rank,
-        leaderboardRank: res.leaderboard_rank
-      }
+      state.userData = payload.data
+      console.log('request userdata')
     },
     getUserWL (state, payload) {
       state.winloss = payload.data
+      console.log('request winloss')
     },
     getMatches (state, payload) {
       state.matches = payload.data
+      console.log('request matches')
     },
     getRecentMatches (state, payload) {
       state.recentMatches = payload.data
+      console.log('request recent matches')
     },
     getHeroes (state, payload) {
       state.heroes = payload.data
+      console.log('request heroes')
     },
     getFriends (state, payload) {
       state.friends = payload.data
+      console.log('request friends')
     },
     getUserHeroes (state, payload) {
       state.userHeroes = payload.data
+      console.log('request heroes played')
     }
   },
   actions: {

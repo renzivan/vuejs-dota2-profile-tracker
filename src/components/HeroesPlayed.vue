@@ -8,7 +8,7 @@
         <li>Win %</li>
       </ul>
       <ul class="matches-data">
-        <li v-for="(userHero, id) of userHeroes.slice(0, 10)" :key="id">
+        <li v-for="(userHero, id) of limitHeroesPlayed" :key="id">
           <img :src="`${imgHeroUrl(parsedHeroes[userHero.hero_id].icon)}`">
           <p>{{ userHero.games }}</p>
           <p>{{ winrate(`${userHero.games}`,`${userHero.win}`) }}</p>
@@ -19,15 +19,12 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 
 export default {
   name: 'HeroesPlayed',
-  data () {
-    return {
-      userHeroes: '',
-      heroes: ''
-    }
+  props: {
+    userHeroes: Array,
+    heroes: Array
   },
   methods: {
     winrate (games, wins) {
@@ -40,10 +37,6 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
-      getUserHeroes: 'getUserHeroes',
-      getHeroes: 'getHeroes'
-    }),
     parsedHeroes () {
       let parsedObject = this.heroes
       let arrayToObj = (array, keyField) =>
@@ -53,14 +46,9 @@ export default {
         }, {})
       parsedObject = arrayToObj(parsedObject, 'id')
       return parsedObject
-    }
-  },
-  watch: {
-    getUserHeroes (val) {
-      this.userHeroes = val
     },
-    getHeroes (val) {
-      this.heroes = val
+    limitHeroesPlayed () {
+      return this.userHeroes !== null ? this.userHeroes.slice(0, 10) : ''
     }
   }
 }
