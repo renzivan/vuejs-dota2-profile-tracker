@@ -6,6 +6,7 @@
         <Profile
           :userData="getUserData"
           :winloss="getUserWL"
+          v-if="is_data_fetched"
         />
         <Navigation />
         <div class="inner-container">
@@ -45,16 +46,7 @@ export default {
     return {
       // profile component
       baseUrl: 'https://api.opendota.com/api',
-      userData: {
-        steamUrl: '',
-        lastLogin: '',
-        avatarUrl: '',
-        personaName: '',
-        rankTier: '',
-        soloMmr: '',
-        partyMmr: '',
-        leaderboardRank: ''
-      },
+      userData: '',
       winloss: '',
       // friends component
       friends: '',
@@ -62,7 +54,8 @@ export default {
       userHeroes: '',
       heroes: '',
       // recentMatches component
-      recentMatches: ''
+      recentMatches: '',
+      is_data_fetched: false
     }
   },
   components: {
@@ -89,17 +82,12 @@ export default {
   },
   watch: {
     getUserData (val) {
-      this.userData.steamUrl = val.steamUrl
-      this.userData.lastLogin = val.lastLogin
-      this.userData.avatarUrl = val.avatarUrl
-      this.userData.personaName = val.personaName
-      this.userData.rankTier = val.rankTier
-      this.userData.soloMmr = val.soloMmr
-      this.userData.partyMmr = val.partyMmr
-      this.userData.leaderboardRank = val.leaderboardRank
+      this.userData = val
+      // val !== null ? this.is_data_fetched = true : this.is_data_fetched = false
     },
     getUserWL (val) {
       this.winloss = val
+      val !== null ? this.is_data_fetched = true : this.is_data_fetched = false
     },
     getFriends (val) {
       this.friends = val

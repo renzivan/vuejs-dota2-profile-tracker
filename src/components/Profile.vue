@@ -2,26 +2,26 @@
   <div id="profile">
     <div id="profile-wrap">
       <div class="left">
-        <b-img rounded :src="`${userData.avatarUrl}`" id="profile-avatar"/>
+        <b-img rounded :src="`${user.profile.avatarfull}`" id="profile-avatar"/>
         <div class="left-inner">
-          <p class="profile-name">{{ userData.personaName }}</p>
-          <a class="profile-steamurl" :href="`${userData.steamUrl}`">Steam profile</a>
+          <p class="profile-name">{{ user.profile.personaname }}</p>
+          <a class="profile-steamurl" :href="`${user.profile.profileurl}`">Steam profile</a>
           <div class="mmr">
-            <p class="profile-solo">Solo MMR<span>{{ userData.soloMmr }}</span></p>
-            <p class="profile-party">Party MMR<span>{{ userData.partyMmr }}</span></p>
+            <p class="profile-solo">Solo MMR<span>{{ user.solo_competitive_rank }}</span></p>
+            <p class="profile-party">Party MMR<span>{{ user.competitive_rank }}</span></p>
           </div>
           <div class="wl">
             <p class="wl-win">Wins<span>{{ winloss.win }}</span></p>
             <p class="wl-loss">Losses<span>{{ winloss.lose }}</span></p>
             <p class="wl-rate">Winrate<span>{{ winrateCalc }}%</span></p>
           </div>
-          <!-- <p class="profile-lastlogin">Last Login: {{ userData.lastLogin }}</p> -->
+          <p class="profile-lastlogin">Last Login: {{ user.profile.last_login }}</p>
         </div>
       </div>
       <div class="right">
         <img v-show="splitRankTier[0] < 8" :src="imgTierUrl" class="stars">
         <img :src="imgRankUrl" class="medal">
-        <p v-show="userData.leaderboardRank !== null" class="leaderboard">{{ userData.leaderboardRank }}</p>
+        <p v-show="user.leaderboard_rank !== null" class="leaderboard">{{ user.leaderboard_rank }}</p>
       </div>
     </div>
   </div>
@@ -36,15 +36,18 @@ export default {
     winloss: Object
   },
   computed: {
+    user () {
+      return { ...this.userData }
+    },
     splitRankTier () {
-      return (this.userData.rankTier / 10).toFixed(1).split('.')
+      return (this.user.rank_tier / 10).toFixed(1).split('.')
     },
     imgRankUrl () {
       let medal = this.splitRankTier[0].toString()
       let imgRankSrc = require.context('../assets/images/rank_icons/', false, /\.png$/)
-      if (this.leaderboardRank > 10 && this.leaderboardRank < 101) {
+      if (this.user.leaderboard_rank > 10 && this.user.leaderboard_rank < 101) {
         medal = '8b'
-      } else if (this.leaderboardRank > 0 && this.leaderboardRank < 11) {
+      } else if (this.user.leaderboard_rank > 0 && this.user.leaderboard_rank < 11) {
         medal = '8c'
       }
       return imgRankSrc('./' + 'rank_icon_' + medal + '.png')
