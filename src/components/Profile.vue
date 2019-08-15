@@ -100,7 +100,6 @@ export default {
   background: #23393e;
   margin-top: 15px;
   padding: 35px;
-  height: 270px;
   #profile-wrap {
     display: flex;
     justify-content: space-between;
@@ -124,7 +123,7 @@ export default {
     margin-left: 40px;
     display: grid;
     .profile-name {
-      font-size: 60px;
+      font-size: 32px;
     }
     .profile-steamurl {
       background-image: url('../assets/images/steam.png');
@@ -161,8 +160,8 @@ export default {
     }
   }
   img {
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
   }
 }
 </style>
