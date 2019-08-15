@@ -27,6 +27,15 @@ export default {
       this.$store.dispatch('getUserData', this.dotaId)
       this.$store.dispatch('getHeroes')
       this.$router.push('/profile/' + this.dotaId)
+    },
+    sendRequest () {
+      this.$store.dispatch('getUserData', this.$route.params.dotaId)
+      this.$store.dispatch('getHeroes')
+    }
+  },
+  beforeMount () {
+    if (this.$route.params.dotaId > 0) {
+      this.sendRequest()
     }
   }
 }
@@ -38,7 +47,7 @@ export default {
     /* background: rgba(0, 0, 0, .4); */
     z-index: 9999;
     background: #23393e;
-    position: fixed;
+    position: absolute;
     width: 100%;
     #logo {
       &:hover {

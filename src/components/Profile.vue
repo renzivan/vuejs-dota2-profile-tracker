@@ -15,7 +15,7 @@
             <p class="wl-loss">Losses<span>{{ winloss.lose }}</span></p>
             <p class="wl-rate">Winrate<span>{{ winrateCalc }}%</span></p>
           </div>
-          <p class="profile-lastlogin">Last Login: {{ user.profile.last_login }}</p>
+          <!-- <p class="profile-lastlogin">Last Login: {{ user.profile.last_login }}</p> -->
         </div>
       </div>
       <div class="right">
@@ -71,7 +71,6 @@ export default {
   background: #23393e;
   margin-top: 15px;
   padding: 35px;
-  height: 270px;
   #profile-wrap {
     display: flex;
     justify-content: space-between;
@@ -95,7 +94,7 @@ export default {
     margin-left: 40px;
     display: grid;
     .profile-name {
-      font-size: 60px;
+      font-size: 32px;
     }
     .profile-steamurl {
       background-image: url('../assets/images/steam.png');
@@ -132,8 +131,8 @@ export default {
     }
   }
   img {
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
   }
 }
 </style>
