@@ -15,7 +15,7 @@
             <p class="wl-loss">Losses<span>{{ winloss.lose }}</span></p>
             <p class="wl-rate">Winrate<span>{{ winrateCalc }}%</span></p>
           </div>
-          <p class="profile-lastlogin">Last Login: {{ user.profile.last_login }}</p>
+          <!-- <p class="profile-lastlogin">Last Login: {{ user.profile.last_login }}</p> -->
         </div>
       </div>
       <div class="right">

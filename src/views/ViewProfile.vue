@@ -3,10 +3,14 @@
     <b-container fluid id="main-container">
       <Header />
       <b-container id="content-container">
-        <Profile
+        <!-- <Profile
           :userData="getUserData"
           :winloss="getUserWL"
           v-if="is_data_fetched"
+        /> -->
+        <Profile
+          :userData="getUserData"
+          :winloss="getUserWL"
         />
         <Navigation />
         <div class="inner-container">
@@ -54,8 +58,8 @@ export default {
       userHeroes: '',
       heroes: '',
       // recentMatches component
-      recentMatches: '',
-      is_data_fetched: false
+      recentMatches: ''
+      // is_data_fetched: false
     }
   },
   components: {
@@ -87,7 +91,7 @@ export default {
     },
     getUserWL (val) {
       this.winloss = val
-      val !== null ? this.is_data_fetched = true : this.is_data_fetched = false
+      // val !== null ? this.is_data_fetched = true : this.is_data_fetched = false
     },
     getFriends (val) {
       this.friends = val
