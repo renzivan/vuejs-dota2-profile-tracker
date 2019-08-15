@@ -71,6 +71,7 @@ export default {
   background: #23393e;
   margin-top: 15px;
   padding: 35px;
+  height: 220px;
   #profile-wrap {
     display: flex;
     justify-content: space-between;
@@ -83,7 +84,7 @@ export default {
       }
       .leaderboard {
         position: relative;
-        top: -52px;
+        top: -45px;
         text-align: center;
         font-size: 24px;
       }
@@ -93,6 +94,7 @@ export default {
     line-height: 1;
     margin-left: 40px;
     display: grid;
+    height: 150px;
     .profile-name {
       font-size: 32px;
     }
