@@ -10,17 +10,26 @@
         <li>KDA</li>
       </ul>
       <ul class="recentMatches-data">
-        <li v-for="(recentMatch, id) of recentMatches" :key="id">
-          <img :src="`${imgHeroUrl(parsedHeroes[recentMatch.hero_id].img)}`" >
-          <p>{{ parsedHeroes[recentMatch.hero_id].localized_name }}</p>
-          <p>{{ gameResult(`${recentMatch.radiant_win}`,team(`${recentMatch.player_slot}`)) }}</p>
+        <!-- <li v-for="(recentMatch, id) of recentMatches" :key="id">
+          <div class="hero">
+            <img :src="`${imgHeroUrl(parsedHeroes[recentMatch.hero_id].img)}`">
+            <p>{{ parsedHeroes[recentMatch.hero_id].localized_name }}</p>
+          </div>
+          <p class="result">{{ gameResult(`${recentMatch.radiant_win}`,team(`${recentMatch.player_slot}`)) }} Match</p>
           <p>{{ gameModes[recentMatch.game_mode].localized_name }}</p>
-          <p>{{ durationCalc(recentMatch.duration) }}</p>
-          <p>{{ team(`${recentMatch.player_slot}`) }}</p>
-          <!-- <p>match_id: {{ recentMatch.match_id }} | party: {{ recentMatch.party_size }} </p> -->
+          <div class="duration-team">
+            <p>{{ durationCalc(recentMatch.duration) }}</p>
+            <p>{{ team(`${recentMatch.player_slot}`) }}</p>
+          </div>
           <p>{{ recentMatch.kills }}/{{ recentMatch.deaths }}/{{ recentMatch.assists }}</p>
-        </li>
+        </li> -->
       </ul>
+      <b-table hover :fields="fields" :items="recentMatches" style="color: #fff;">
+        <template slot="[hero]" slot-scope="data">
+          {{ data.items.hero_id }}
+        </template>
+      </b-table>
+      <!-- <pre style="color: #fff;">{{ recentMatches }}</pre> -->
     </div>
   </div>
 </template>
@@ -36,6 +45,9 @@ export default {
   },
   data () {
     return {
+      fields: [
+        { key: 'hero', label: 'Hero' }
+      ],
       gameModes: jsonGameMode
     }
   },
@@ -89,6 +101,16 @@ export default {
     padding: 15px 10px;
     margin-bottom: 0;
     border-bottom: 1px solid #3a5f67;
+    li {
+      // flex: 0.5;
+      // &:first-child {
+      //   flex: 1;
+      // }
+      // &:last-child {
+      //   flex: 0.3;
+      // }
+      width: 100%;
+    }
   }
   ul.recentMatches-data {
     li {
