@@ -25,7 +25,7 @@
         </li> -->
       </ul>
       <b-table hover :fields="fields" :items="recentMatches" style="color: #fff;">
-        <template slot="[hero]" slot-scope="data">
+        <template slot="hero" slot-scope="data">
           {{ data.items.hero_id }}
         </template>
       </b-table>
@@ -46,7 +46,7 @@ export default {
   data () {
     return {
       fields: [
-        { key: 'hero', label: 'Hero' }
+        { key: 'hero_id', label: 'Hero' }
       ],
       gameModes: jsonGameMode
     }
