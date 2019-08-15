@@ -1,8 +1,9 @@
 # Dota 2 Profile Web App Using Vue.js
 
 ### References
->[OpenDota API Documentation](https://docs.opendota.com)
->[Game Modes](https://github.com/odota/dotaconstants/blob/master/json/game_mode.json)
+-[Bootstrap-Vue Documentation](https://bootstrap-vue.js.org/docs)
+-[OpenDota API Documentation](https://docs.opendota.com)
+-[Game Modes](https://github.com/odota/dotaconstants/blob/master/json/game_mode.json)
 
 ### Getting Started
 ```bash
@@ -16,7 +17,7 @@ npm install
 npm run serve
 ```
 
-### Installed Dependencies
+### Dependencies
 ```bash
 # Install the Vue CLI
 npm install -g @vue/cli
@@ -38,12 +39,10 @@ npm install node-sass sass-loader --save-dev
 
 # Install Bootstrap Vue
 npm install bootstrap-vue bootstrap
-
 ```
 
 ### Issues
-I have this error : Module build failed (from ./node_modules/sass-loader/lib/loader.js):
-```npm rebuild node-sass```
-
-[Bootstrap-Vue Documentation](https://bootstrap-vue.js.org/docs)
-
+``` bash
+# I have this error : Module build failed (from ./node_modules/sass-loader/lib/loader.js):
+npm rebuild node-sass
+```
