@@ -33,3 +33,32 @@ p {
     }
   }
 }
+
+// data tables
+.table {
+  margin-bottom: 0;
+  thead > tr {
+    .header {
+      text-transform: uppercase;
+      font-size: 13px;
+      padding: 15px 10px;
+      border-bottom: 1px solid #3a5f67;
+      border-top: 0;
+    }
+  }
+  .data {
+    border-bottom: 1px solid #22393f;
+    font-size: 13px;
+    vertical-align: middle;
+    padding: 10px;
+    img {
+      width: 56px;
+      height: 32px;
+    }
+  }
+  .heroesplayed-data, .friends-data {
+    img {
+      width: 32px;
+    }
+  }
+}

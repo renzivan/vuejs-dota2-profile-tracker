@@ -2,7 +2,7 @@
   <div id="recentMatches">
     <h2>Recent Matches</h2>
     <div class="content-data" style="overflow: auto">
-      <ul class="recentMatches-header">
+      <!-- <ul class="recentMatches-header">
         <li>Hero</li>
         <li>Result</li>
         <li>Mode</li>
@@ -10,7 +10,7 @@
         <li>KDA</li>
       </ul>
       <ul class="recentMatches-data">
-        <!-- <li v-for="(recentMatch, id) of recentMatches" :key="id">
+        <li v-for="(recentMatch, id) of recentMatches" :key="id">
           <div class="hero">
             <img :src="`${imgHeroUrl(parsedHeroes[recentMatch.hero_id].img)}`">
             <p>{{ parsedHeroes[recentMatch.hero_id].localized_name }}</p>
@@ -22,11 +22,28 @@
             <p>{{ team(`${recentMatch.player_slot}`) }}</p>
           </div>
           <p>{{ recentMatch.kills }}/{{ recentMatch.deaths }}/{{ recentMatch.assists }}</p>
-        </li> -->
-      </ul>
-      <b-table hover :fields="fields" :items="recentMatches" style="color: #fff;">
-        <template slot="hero" slot-scope="data">
+        </li>
+      </ul> -->
+      <b-table :fields="fields" :items="recentMatches" style="color: #fff;" class="recentMatches-table">
+        <!-- <template slot="[]" slot-scope="data">
           {{ data.items.hero_id }}
+        </template> -->
+        <template slot="hero" slot-scope="data">
+          <img :src="`${imgHeroUrl(parsedHeroes[data.item.hero_id].img)}`">
+          {{ parsedHeroes[data.item.hero_id].localized_name }}
+        </template>
+        <template slot="result" slot-scope="data">
+          {{ gameResult(`${data.item.radiant_win}`,team(`${data.item.player_slot}`)) }}
+        </template>
+        <template slot="mode" slot-scope="data">
+          {{ gameModes[data.item.game_mode].localized_name }}
+        </template>
+        <template slot="duration" slot-scope="data">
+          {{ durationCalc(data.item.duration) }}
+          {{ team(`${data.item.player_slot}`) }}
+        </template>
+        <template slot="kda" slot-scope="data">
+          {{ data.item.kills }}/{{ data.item.deaths }}/{{ data.item.assists }}
         </template>
       </b-table>
       <!-- <pre style="color: #fff;">{{ recentMatches }}</pre> -->
@@ -46,7 +63,12 @@ export default {
   data () {
     return {
       fields: [
-        { key: 'hero_id', label: 'Hero' }
+        // { key: 'hero_id', label: 'Hero', thClass: 'header', tdClass: 'data' },
+        { key: 'hero', label: 'Hero', thClass: 'header', tdClass: 'data' },
+        { key: 'result', label: 'Result', thClass: 'header', tdClass: 'data' },
+        { key: 'mode', label: 'Mode', thClass: 'header', tdClass: 'data' },
+        { key: 'duration', label: 'Mode', thClass: 'header', tdClass: 'data' },
+        { key: 'kda', label: 'KDA', thClass: 'header', tdClass: 'data' }
       ],
       gameModes: jsonGameMode
     }
@@ -94,33 +116,5 @@ export default {
   .content-data {
     margin-right: 7px;
   }
-  ul.recentMatches-header {
-    display: flex;
-    text-transform: uppercase;
-    font-size: 13px;
-    padding: 15px 10px;
-    margin-bottom: 0;
-    border-bottom: 1px solid #3a5f67;
-    li {
-      // flex: 0.5;
-      // &:first-child {
-      //   flex: 1;
-      // }
-      // &:last-child {
-      //   flex: 0.3;
-      // }
-      width: 100%;
-    }
-  }
-  ul.recentMatches-data {
-    li {
-      display: flex;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #22393f;
-      img {
-        width: 56px;
-        height: 32px;
-      }
-    }
-  }
+
 </style>
