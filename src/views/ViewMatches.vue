@@ -8,14 +8,14 @@
           :winloss="getUserWL"
         />
         <Navigation />
-        <b-row class="inner-container">
-          <b-col>
+        <div class="inner-container">
+          <div class="inner-data-1">
             <Matches
               :matches="getMatches"
               :heroes="getHeroes"
             />
-          </b-col>
-        </b-row>
+          </div>
+        </div>
       </b-container>
     </b-container>
   </div>

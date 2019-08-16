@@ -1,23 +1,8 @@
 <template>
   <div id="friends">
-      <h2>Recent Friends Played With</h2>
+    <h2>Friends</h2>
     <div class="content-data" style="overflow: auto">
-      <!-- <ul class="friends-header">
-        <li>Player</li>
-        <li>Matches</li>
-        <li>Win %</li>
-      </ul>
-      <ul class="friends-data">
-        <li v-for="(friend, id) of limitFriends" :key="id">
-          <img :src="`${ friend.avatar }`" >
-          <p>{{ friend.personaname }}</p>
-          <p>{{ convertTime(friend.last_played) }}</p>
-          <p>{{ friend.games }}</p>
-          <p>{{ winrate(friend.games, friend.win) }}</p>
-        </li>
-      </ul> -->
-      <!-- <pre style="color: #fff;">{{ friends }}</pre> -->
-      <b-table :fields="fields" :items="limitFriends" style="color: #fff;" class="heroesPlayed-table">
+      <b-table :fields="fields" :items="limitFriends" class="heroesPlayed-table">
         <template slot="player" slot-scope="data">
           <img :src="`${ data.item.avatar }`" >
           {{ data.item.personaname }}
@@ -76,12 +61,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .friends-header {
-    display: flex;
-  }
-  .friends-data {
-    li {
-      display: flex;
-    }
-  }
 </style>

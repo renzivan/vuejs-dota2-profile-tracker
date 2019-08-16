@@ -8,13 +8,13 @@
           :winloss="getUserWL"
         />
         <Navigation />
-        <b-row class="inner-container">
-          <b-col>
+        <div class="inner-container">
+          <div class="inner-data-1">
             <Friends
               :friends="getFriends"
             />
-          </b-col>
-        </b-row>
+          </div>
+        </div>
       </b-container>
     </b-container>
   </div>
