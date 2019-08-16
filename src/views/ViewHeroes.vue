@@ -68,14 +68,7 @@ export default {
   },
   watch: {
     getUserData (val) {
-      this.userData.steamUrl = val.steamUrl
-      this.userData.lastLogin = val.lastLogin
-      this.userData.avatarUrl = val.avatarUrl
-      this.userData.personaName = val.personaName
-      this.userData.rankTier = val.rankTier
-      this.userData.soloMmr = val.soloMmr
-      this.userData.partyMmr = val.partyMmr
-      this.userData.leaderboardRank = val.leaderboardRank
+      this.userData = val
     },
     getUserWL (val) {
       this.winloss = val

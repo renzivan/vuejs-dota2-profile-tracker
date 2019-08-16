@@ -80,10 +80,10 @@ export default {
   },
   watch: {
     getUserData (val) {
-      this.userData = valx
+      this.userData = val
     },
     getUserWL (val) {
-      this.winloss = valx
+      this.winloss = val
     },
     getFriends (val) {
       this.friends = val

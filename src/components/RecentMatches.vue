@@ -8,7 +8,9 @@
           {{ parsedHeroes[data.item.hero_id].localized_name }}
         </template>
         <template slot="result" slot-scope="data">
-          {{ gameResult(`${data.item.radiant_win}`,team(`${data.item.player_slot}`)) }}
+          <p v-bind:class="{'won': gameResult(`${data.item.radiant_win}`,team(`${data.item.player_slot}`)) === 'Won', 'lost': gameResult(`${data.item.radiant_win}`,team(`${data.item.player_slot}`)) === 'Lost'}">
+            {{ gameResult(`${data.item.radiant_win}`,team(`${data.item.player_slot}`)) }}
+          </p>
         </template>
         <template slot="mode" slot-scope="data">
           {{ gameModes[data.item.game_mode].localized_name }}
@@ -89,5 +91,4 @@ export default {
   .content-data {
     margin-right: 7px;
   }
-
 </style>
