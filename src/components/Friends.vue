@@ -1,23 +1,19 @@
 <template>
   <div id="friends">
-      <h2>Recent Friends Played With</h2>
+    <h2>Friends</h2>
     <div class="content-data" style="overflow: auto">
-      <ul class="friends-header">
-        <li>Player</li>
-        <li>Matches</li>
-        <li>Win %</li>
-      </ul>
-      <ul class="friends-data">
-        <!-- <li v-for="(friend, id) of friends.slice(0,6)" :key="id"> -->
-        <li v-for="(friend, id) of limitFriends" :key="id">
-          <img :src="`${ friend.avatar }`" >
-          <p>{{ friend.personaname }}</p>
-          <p>{{ convertTime(friend.last_played) }}</p>
-          <p>{{ friend.games }}</p>
-          <p>{{ winrate(friend.games, friend.win) }}</p>
-        </li>
-      </ul>
-      <!-- <pre style="color: #fff;">{{ friends }}</pre> -->
+      <b-table :fields="fields" :items="limitFriends" class="heroesPlayed-table">
+        <template slot="player" slot-scope="data">
+          <img :src="`${ data.item.avatar }`" >
+          {{ data.item.personaname }}
+        </template>
+        <template slot="matches" slot-scope="data">
+          {{ data.item.games }}
+        </template>
+        <template slot="winrate" slot-scope="data">
+          {{ winrate(data.item.games, data.item.win) }}
+        </template>
+      </b-table>
     </div>
   </div>
 </template>
@@ -28,6 +24,15 @@ export default {
   name: 'Friends',
   props: {
     friends: Array
+  },
+  data () {
+    return {
+      fields: [
+        { key: 'player', label: 'Player', thClass: 'header', tdClass: 'friends-data data' },
+        { key: 'matches', label: 'Matches', thClass: 'header', tdClass: 'data' },
+        { key: 'winrate', label: 'Win %', thClass: 'header', tdClass: 'data' }
+      ]
+    }
   },
   methods: {
     winrate (games, wins) {
@@ -49,19 +54,11 @@ export default {
   },
   computed: {
     limitFriends () {
-      return this.friends !== null ? this.friends.slice(0, 5) : ''
+      return this.friends !== null ? this.friends.slice(0, 8) : ''
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .friends-header {
-    display: flex;
-  }
-  .friends-data {
-    li {
-      display: flex;
-    }
-  }
 </style>

@@ -8,13 +8,13 @@
           :winloss="getUserWL"
         />
         <Navigation />
-        <b-row class="inner-container">
-          <b-col>
+        <div class="inner-container">
+          <div class="inner-data-1">
             <Friends
               :friends="getFriends"
             />
-          </b-col>
-        </b-row>
+          </div>
+        </div>
       </b-container>
     </b-container>
   </div>
@@ -65,14 +65,7 @@ export default {
   },
   watch: {
     getUserData (val) {
-      this.userData.steamUrl = val.steamUrl
-      this.userData.lastLogin = val.lastLogin
-      this.userData.avatarUrl = val.avatarUrl
-      this.userData.personaName = val.personaName
-      this.userData.rankTier = val.rankTier
-      this.userData.soloMmr = val.soloMmr
-      this.userData.partyMmr = val.partyMmr
-      this.userData.leaderboardRank = val.leaderboardRank
+      this.userData = val
     },
     getUserWL (val) {
       this.winloss = val

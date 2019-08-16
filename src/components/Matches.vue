@@ -2,25 +2,25 @@
   <div id="matches">
     <h2>Matches</h2>
     <div class="content-data" style="overflow: auto">
-      <ul class="matches-header">
-        <li>Hero</li>
-        <li>Result</li>
-        <li>Mode</li>
-        <li>Duration</li>
-        <li>KDA</li>
-      </ul>
-      <ul class="matches-data">
-        <li v-for="(match, id) of limiteMatches" :key="id">
-          <!-- <p>{{ match }}</p> -->
-          <img :src="`${imgHeroUrl(parsedHeroes[match.hero_id].img)}`">
-          <p>{{ parsedHeroes[match.hero_id].localized_name }}</p>
-          <p>{{ gameResult(`${match.radiant_win}`,team(`${match.player_slot}`)) }}</p>
-          <p>{{ gameModes[match.game_mode].localized_name }}</p>
-          <p>{{ durationCalc(match.duration) }}</p>
-          <p>{{ team(`${match.player_slot}`) }}</p>
-          <p>{{ match.kills }}/{{ match.deaths }}/{{ match.assists }}</p>
-        </li>
-      </ul>
+      <b-table :fields="fields" :items="limitMatches" class="matches-table">
+        <template slot="hero" slot-scope="data">
+          <img :src="`${imgHeroUrl(parsedHeroes[data.item.hero_id].img)}`">
+          {{ parsedHeroes[data.item.hero_id].localized_name }}
+        </template>
+        <template slot="result" slot-scope="data">
+          {{ gameResult(`${data.item.radiant_win}`,team(`${data.item.player_slot}`)) }}
+        </template>
+        <template slot="mode" slot-scope="data">
+          {{ gameModes[data.item.game_mode].localized_name }}
+        </template>
+        <template slot="duration" slot-scope="data">
+          {{ durationCalc(data.item.duration) }}
+          {{ team(`${data.item.player_slot}`) }}
+        </template>
+        <template slot="kda" slot-scope="data">
+          {{ data.item.kills }}/{{ data.item.deaths }}/{{ data.item.assists }}
+        </template>
+      </b-table>
     </div>
   </div>
 </template>
@@ -36,6 +36,13 @@ export default {
   },
   data () {
     return {
+      fields: [
+        { key: 'hero', label: 'Hero', thClass: 'header', tdClass: 'matches-data data' },
+        { key: 'result', label: 'Result', thClass: 'header', tdClass: 'data' },
+        { key: 'mode', label: 'Mode', thClass: 'header', tdClass: 'data' },
+        { key: 'duration', label: 'Duration', thClass: 'header', tdClass: 'data' },
+        { key: 'kda', label: 'KDA', thClass: 'header', tdClass: 'data' }
+      ],
       gameModes: jsonGameMode
     }
   },
@@ -61,7 +68,7 @@ export default {
     // },
   },
   computed: {
-    limiteMatches () {
+    limitMatches () {
       return this.matches !== null ? this.matches.slice(0, 20) : ''
     },
     parsedHeroes () { // needed if array index != array[].id
@@ -79,23 +86,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  ul.matches-header {
-    display: flex;
-    text-transform: uppercase;
-    font-size: 13px;
-    padding: 15px 10px;
-    margin-bottom: 0;
-    border-bottom: 1px solid #3a5f67;
-  }
-  ul.matches-data {
-    li {
-      display: flex;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #22393f;
-      img {
-        width: 56px;
-        height: 32px;
-      }
-    }
-  }
 </style>
