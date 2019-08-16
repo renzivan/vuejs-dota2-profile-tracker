@@ -23,6 +23,7 @@ p {
       background: rgba(0,0,0,0.4);
       margin: 0;
       padding: 7px;
+      display: flex;
       h2 {
         font-size: 22px;
         text-transform: uppercase;
@@ -30,12 +31,20 @@ p {
       .content-data {
         background: rgba(0,0,0,0.4);
       }
+      .inner-data-1, .inner-data-2 {
+        width: 100%;
+      }
+      .inner-data-2 {
+        display: grid;
+        overflow: hidden;
+      }
     }
   }
 }
 
 // data tables
 .table {
+  color: #fff;
   margin-bottom: 0;
   thead > tr {
     .header {
@@ -44,6 +53,7 @@ p {
       padding: 15px 10px;
       border-bottom: 1px solid #3a5f67;
       border-top: 0;
+      font-weight: 400;
     }
   }
   .data {
@@ -61,4 +71,12 @@ p {
       width: 32px;
     }
   }
+}
+
+// game result style
+.won {
+  color: #e3323a;
+}
+.lost {
+  color: #50a654;
 }

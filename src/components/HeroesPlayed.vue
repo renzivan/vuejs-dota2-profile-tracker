@@ -2,18 +2,6 @@
   <div id="heroesPlayed">
     <h2>Most Played Heroes</h2>
     <div class="content-data" style="overflow: auto">
-      <!-- <ul class="matches-header">
-        <li>Hero</li>
-        <li>Matches</li>
-        <li>Win %</li>
-      </ul>
-      <ul class="matches-data">
-        <li v-for="(userHero, id) of limitHeroesPlayed" :key="id">
-          <img :src="`${imgHeroUrl(parsedHeroes[userHero.hero_id].icon)}`">
-          <p>{{ userHero.games }}</p>
-          <p>{{ winrate(`${userHero.games}`,`${userHero.win}`) }}</p>
-        </li>
-      </ul> -->
       <b-table :fields="fields" :items="limitHeroesPlayed" style="color: #fff;" class="heroesPlayed-table">
         <template slot="hero" slot-scope="data">
           <img :src="`${imgHeroUrl(parsedHeroes[data.item.hero_id].icon)}`">
@@ -76,12 +64,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .matches-header {
-    display: flex;
-  }
-  .matches-data {
-    li {
-      display: flex;
-    }
-  }
 </style>
