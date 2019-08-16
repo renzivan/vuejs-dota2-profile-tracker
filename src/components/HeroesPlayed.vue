@@ -2,7 +2,7 @@
   <div id="heroesPlayed">
     <h2>Most Played Heroes</h2>
     <div class="content-data" style="overflow: auto">
-      <ul class="matches-header">
+      <!-- <ul class="matches-header">
         <li>Hero</li>
         <li>Matches</li>
         <li>Win %</li>
@@ -13,7 +13,19 @@
           <p>{{ userHero.games }}</p>
           <p>{{ winrate(`${userHero.games}`,`${userHero.win}`) }}</p>
         </li>
-      </ul>
+      </ul> -->
+      <b-table :fields="fields" :items="limitHeroesPlayed" style="color: #fff;" class="heroesPlayed-table">
+        <template slot="hero" slot-scope="data">
+          <img :src="`${imgHeroUrl(parsedHeroes[data.item.hero_id].icon)}`">
+          {{ parsedHeroes[data.item.hero_id].localized_name }}
+        </template>
+        <template slot="matches" slot-scope="data">
+          {{ data.item.games }}
+        </template>
+        <template slot="winrate" slot-scope="data">
+          {{ winrate(`${data.item.games}`,`${data.item.win}`) }}
+        </template>
+      </b-table>
     </div>
   </div>
 </template>
@@ -25,6 +37,15 @@ export default {
   props: {
     userHeroes: Array,
     heroes: Array
+  },
+  data () {
+    return {
+      fields: [
+        { key: 'hero', label: 'Hero', thClass: 'header', tdClass: 'heroesplayed-data data' },
+        { key: 'matches', label: 'Matches', thClass: 'header', tdClass: 'data' },
+        { key: 'winrate', label: 'Win %', thClass: 'header', tdClass: 'data' }
+      ]
+    }
   },
   methods: {
     winrate (games, wins) {
