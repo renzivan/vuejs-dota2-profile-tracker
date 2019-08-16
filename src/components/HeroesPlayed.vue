@@ -1,7 +1,7 @@
 <template>
   <div id="heroesPlayed">
     <h2>Most Played Heroes</h2>
-    <div class="content-data" style="overflow: auto">
+    <div class="content-data" style="overflow: auto" v-if="Array.isArray(limitHeroesPlayed)">
       <b-table :fields="fields" :items="limitHeroesPlayed" style="color: #fff;" class="heroesPlayed-table">
         <template slot="hero" slot-scope="data">
           <img :src="`${imgHeroUrl(parsedHeroes[data.item.hero_id].icon)}`">

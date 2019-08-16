@@ -33,19 +33,10 @@ export default {
     return {
       // profile component
       baseUrl: 'https://api.opendota.com/api',
-      userData: {
-        steamUrl: '',
-        lastLogin: '',
-        avatarUrl: '',
-        personaName: '',
-        rankTier: '',
-        soloMmr: '',
-        partyMmr: '',
-        leaderboardRank: ''
-      },
+      userData: {},
       winloss: '',
       // friends component
-      friends: ''
+      friends: []
     }
   },
   components: {

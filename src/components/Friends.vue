@@ -1,7 +1,7 @@
 <template>
   <div id="friends">
     <h2>Friends</h2>
-    <div class="content-data" style="overflow: auto">
+    <div class="content-data" style="overflow: auto" v-if="Array.isArray(limitFriends)">
       <b-table :fields="fields" :items="limitFriends" class="heroesPlayed-table">
         <template slot="player" slot-scope="data">
           <img :src="`${ data.item.avatar }`" >
