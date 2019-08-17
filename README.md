@@ -17,13 +17,10 @@ npm install
 npm run serve
 ```
 
-### Dependencies
+### Installed Dependencies
 ```bash
 # Install the Vue CLI
 npm install -g @vue/cli
-
-# New Vue Project
-vue create hello-world
 
 # Install vue-router
 npm install vue-router

@@ -6,7 +6,7 @@
           <router-link to="/" id="logo"><h1 class="align-middle">DOTA<span>NERF</span></h1></router-link>
         </b-col>
         <b-col>
-          <b-form-input id="searchInput" type="text" v-model="dotaId" @keyup.enter="submitDotaId" autofocus placeholder="Search players, matches..."/>
+          <b-form-input id="searchInput" type="text" v-model="dotaId" @keyup.enter="submitDotaId" autofocus placeholder="Search player dota id..."/>
         <button @click="submitDotaId"></button>
         </b-col>
       </b-row>

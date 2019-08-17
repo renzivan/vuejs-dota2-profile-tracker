@@ -1,7 +1,7 @@
 <template>
   <div id="profile">
     <div id="profile-wrap">
-      <div class="left">
+      <div class="left" v-if="user && user.profile && winloss">
         <b-img rounded :src="`${user.profile.avatarfull}`" id="profile-avatar"/>
         <div class="left-inner">
           <p class="profile-name">{{ user.profile.personaname }}</p>
@@ -50,12 +50,12 @@ export default {
       } else if (this.user.leaderboard_rank > 0 && this.user.leaderboard_rank < 11) {
         medal = '8c'
       }
-      return imgRankSrc('./' + 'rank_icon_' + medal + '.png')
+      return medal === undefined || medal === null || isNaN(medal) ? false : imgRankSrc('./' + 'rank_icon_' + medal + '.png')
     },
     imgTierUrl () {
       let star = this.splitRankTier[1]
       let imgTierSrc = require.context('../assets/images/rank_icons/', false, /\.png$/)
-      return (star < 1 ? false : imgTierSrc('./' + 'rank_star_' + star + '.png'))
+      return star !== undefined ? imgTierSrc('./' + 'rank_star_' + star + '.png') : false
     },
     winrateCalc () {
       let totalMatches = this.winloss.win + this.winloss.lose
