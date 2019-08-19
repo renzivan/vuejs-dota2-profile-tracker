@@ -49,7 +49,7 @@ export default {
         medal = '8b'
       } else if (this.user.leaderboard_rank > 0 && this.user.leaderboard_rank < 11) {
         medal = '8c'
-      }
+      }// eslint-disable-next-line
       return medal === undefined || medal === null || medal == 'NaN' ? false : imgRankSrc('./' + 'rank_icon_' + medal + '.png')
     },
     imgTierUrl () {

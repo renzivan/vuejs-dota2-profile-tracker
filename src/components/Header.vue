@@ -35,23 +35,25 @@ export default {
       this.windowWidth = document.documentElement.clientWidth
     },
     submitDotaId () {
+      const searchbox = document.getElementById('search-wrap')
+      const searchinput = document.getElementById('searchInput')
       if (this.windowWidth <= 479) {
-        let searchbox = document.getElementById('search-wrap')
-        let searchinput = document.getElementById('searchInput')
         if (searchbox.classList.contains('show-search-box')) {
           searchbox.classList.remove('show-search-box')
         } else {
           searchbox.classList.add('show-search-box')
           searchinput.focus()
         }
-        if (this.dotaId.length > 0) {
+        if (searchinput.value.length > 0) {
           this.sendReq()
           searchinput.value = ''
         } else {
           return false
         }
       } else {
-        this.sendReq()
+        if (searchinput.value.length > 0) {
+          this.sendReq()
+        }
       }
     },
     sendReq () {
@@ -61,10 +63,11 @@ export default {
     }
   },
   beforeMount () {
-    if (this.$route.params.dotaId > 0) {
-      this.$store.dispatch('getUserData', this.$route.params.dotaId)
-      this.$store.dispatch('getHeroes')
-    }
+    // if (this.$route.params.dotaId > 0) {
+    //   // this.$store.dispatch('getUserData', this.$route.params.dotaId)
+    //   // this.$store.dispatch('getHeroes')
+    //   this.submitDotaId()
+    // }
   }
 }
 </script>
