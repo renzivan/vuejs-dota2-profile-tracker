@@ -5,7 +5,7 @@
         <b-img rounded :src="`${user.profile.avatarfull}`" id="profile-avatar"/>
         <div class="left-inner">
           <p class="profile-name">{{ user.profile.personaname }}</p>
-          <a class="profile-steamurl" :href="`${user.profile.profileurl}`">Steam profile</a>
+          <a class="profile-steamurl" :href="`${user.profile.profileurl}`" target="_blank">Steam profile</a>
           <div class="mmr">
             <p class="profile-solo">Solo MMR<span>{{ user.solo_competitive_rank }}</span></p>
             <p class="profile-party">Party MMR<span>{{ user.competitive_rank }}</span></p>
@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="right">
-        <img v-show="splitRankTier[0] < 8" :src="imgTierUrl" class="stars">
+        <img v-if="splitRankTier[0] < 8 && user.rank_tier !== null" :src="imgTierUrl" class="stars">
         <img :src="imgRankUrl" class="medal">
         <p v-show="user.leaderboard_rank !== null" class="leaderboard">{{ user.leaderboard_rank }}</p>
       </div>
@@ -50,7 +50,7 @@ export default {
       } else if (this.user.leaderboard_rank > 0 && this.user.leaderboard_rank < 11) {
         medal = '8c'
       }
-      return medal === undefined || medal === null || isNaN(medal) ? false : imgRankSrc('./' + 'rank_icon_' + medal + '.png')
+      return medal === undefined || medal === null || medal == 'NaN' ? false : imgRankSrc('./' + 'rank_icon_' + medal + '.png')
     },
     imgTierUrl () {
       let star = this.splitRankTier[1]
@@ -96,7 +96,7 @@ export default {
     display: grid;
     height: 150px;
     .profile-name {
-      font-size: 32px;
+      font-size: 28px;
     }
     .profile-steamurl {
       background-image: url('../assets/images/steam.png');
@@ -152,6 +152,9 @@ export default {
         }
       }
       .right {
+        text-align: center;
+      }
+      .profile-name {
         text-align: center;
       }
     }

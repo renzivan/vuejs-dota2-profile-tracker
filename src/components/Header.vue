@@ -45,15 +45,13 @@ export default {
           searchinput.focus()
         }
         if (this.dotaId.length > 0) {
-          this.$store.dispatch('getUserData', this.dotaId)
-          this.$store.dispatch('getHeroes')
-          this.$router.push('/profile/' + this.dotaId)
+          this.sendReq()
           searchinput.value = ''
+        } else {
+          return false
         }
       } else {
-        this.$store.dispatch('getUserData', this.dotaId)
-        this.$store.dispatch('getHeroes')
-        this.$router.push('/profile/' + this.dotaId)
+        this.sendReq()
       }
     },
     sendReq () {
