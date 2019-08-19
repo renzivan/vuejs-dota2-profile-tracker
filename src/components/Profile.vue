@@ -137,4 +137,28 @@ export default {
     height: 150px;
   }
 }
+
+@media screen and (max-width: 767px) {
+/* start of medium tablet styles */
+  #profile {
+    height: auto;
+    padding-bottom: 0;
+    #profile-wrap {
+      display: block;
+      .left {
+        display: grid;
+        .left-inner > * {
+          margin: 0 auto;
+        }
+      }
+      .right {
+        text-align: center;
+      }
+    }
+    img,
+    .left-inner {
+      margin: auto;
+    }
+  }
+}
 </style>

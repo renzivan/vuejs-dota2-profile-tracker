@@ -5,7 +5,7 @@
       <b-table :fields="fields" :items="limitHeroesPlayed" style="color: #fff;" class="heroesPlayed-table">
         <template slot="hero" slot-scope="data">
           <img :src="`${imgHeroUrl(parsedHeroes[data.item.hero_id].icon)}`">
-          {{ parsedHeroes[data.item.hero_id].localized_name }}
+          <span>{{ parsedHeroes[data.item.hero_id].localized_name }}</span>
         </template>
         <template slot="matches" slot-scope="data">
           {{ data.item.games }}
@@ -64,4 +64,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @media screen and (max-width: 520px) {
+    img {
+      display: block;
+    }
+  }
 </style>

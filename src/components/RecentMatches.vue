@@ -5,7 +5,7 @@
       <b-table :fields="fields" :items="recentMatches" style="color: #fff;" class="recentMatches-table">
         <template slot="hero" slot-scope="data">
           <img :src="`${imgHeroUrl(parsedHeroes[data.item.hero_id].img)}`">
-          {{ parsedHeroes[data.item.hero_id].localized_name }}
+          <span>{{ parsedHeroes[data.item.hero_id].localized_name }}</span>
         </template>
         <template slot="result" slot-scope="data">
           <p v-bind:class="{'won': gameResult(`${data.item.radiant_win}`,team(`${data.item.player_slot}`)) === 'Won', 'lost': gameResult(`${data.item.radiant_win}`,team(`${data.item.player_slot}`)) === 'Lost'}">
@@ -16,8 +16,8 @@
           {{ gameModes[data.item.game_mode].localized_name }}
         </template>
         <template slot="duration" slot-scope="data">
-          {{ durationCalc(data.item.duration) }}
-          {{ team(`${data.item.player_slot}`) }}
+          <p>{{ durationCalc(data.item.duration) }}</p>
+          <p>{{ team(`${data.item.player_slot}`) }}</p>
         </template>
         <template slot="kda" slot-scope="data">
           {{ data.item.kills }}/{{ data.item.deaths }}/{{ data.item.assists }}
@@ -90,5 +90,16 @@ export default {
   }
   .content-data {
     margin-right: 7px;
+  }
+  //
+  @media screen and (max-width: 991px) {
+    .content-data {
+      margin-right: 0px;
+    }
+  }
+  @media screen and (max-width: 520px) {
+    img {
+      display: block;
+    }
   }
 </style>
