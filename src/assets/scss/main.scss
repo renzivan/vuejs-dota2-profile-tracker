@@ -34,10 +34,6 @@ p {
       .inner-data-1, .inner-data-2 {
         width: 100%;
       }
-      .inner-data-2 {
-        display: grid;
-        overflow: hidden;
-      }
     }
   }
 }
@@ -75,8 +71,28 @@ p {
 
 // game result style
 .won {
-  color: #e3323a;
+  color: #50a654;
 }
 .lost {
-  color: #50a654;
+  color: #e3323a;
+}
+
+// media queries standard
+@media screen and (max-width: 991px) {
+  /* start of large tablet styles */
+  #main-container {
+    #content-container {
+      .inner-container {
+        display: block;
+      }
+    }
+  }
+}
+  
+@media screen and (max-width: 767px) {
+/* start of medium tablet styles */
+}
+
+@media screen and (max-width: 479px) {
+/* start of phone styles */
 }

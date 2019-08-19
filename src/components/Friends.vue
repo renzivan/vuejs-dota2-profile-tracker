@@ -1,11 +1,11 @@
 <template>
   <div id="friends">
     <h2>Friends</h2>
-    <div class="content-data" style="overflow: auto">
+    <div class="content-data" style="overflow: auto" v-if="Array.isArray(limitFriends)">
       <b-table :fields="fields" :items="limitFriends" class="heroesPlayed-table">
         <template slot="player" slot-scope="data">
           <img :src="`${ data.item.avatar }`" >
-          {{ data.item.personaname }}
+          <span>{{ data.item.personaname }}</span>
         </template>
         <template slot="matches" slot-scope="data">
           {{ data.item.games }}
@@ -61,4 +61,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @media screen and (max-width: 520px) {
+    img {
+      display: block;
+    }
+  }
 </style>

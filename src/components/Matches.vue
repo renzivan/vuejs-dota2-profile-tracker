@@ -1,14 +1,16 @@
 <template>
   <div id="matches">
     <h2>Matches</h2>
-    <div class="content-data" style="overflow: auto">
+    <div class="content-data" style="overflow: auto" v-if="Array.isArray(limitMatches)">
       <b-table :fields="fields" :items="limitMatches" class="matches-table">
         <template slot="hero" slot-scope="data">
           <img :src="`${imgHeroUrl(parsedHeroes[data.item.hero_id].img)}`">
-          {{ parsedHeroes[data.item.hero_id].localized_name }}
+          <span>{{ parsedHeroes[data.item.hero_id].localized_name }}</span>
         </template>
         <template slot="result" slot-scope="data">
-          {{ gameResult(`${data.item.radiant_win}`,team(`${data.item.player_slot}`)) }}
+          <p v-bind:class="{'won': gameResult(`${data.item.radiant_win}`,team(`${data.item.player_slot}`)) === 'Won', 'lost': gameResult(`${data.item.radiant_win}`,team(`${data.item.player_slot}`)) === 'Lost'}">
+            {{ gameResult(`${data.item.radiant_win}`,team(`${data.item.player_slot}`)) }}
+          </p>
         </template>
         <template slot="mode" slot-scope="data">
           {{ gameModes[data.item.game_mode].localized_name }}
@@ -86,4 +88,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @media screen and (max-width: 520px) {
+    img {
+      display: block;
+    }
+  }
 </style>
