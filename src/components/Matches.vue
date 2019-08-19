@@ -5,7 +5,7 @@
       <b-table :fields="fields" :items="limitMatches" class="matches-table">
         <template slot="hero" slot-scope="data">
           <img :src="`${imgHeroUrl(parsedHeroes[data.item.hero_id].img)}`">
-          {{ parsedHeroes[data.item.hero_id].localized_name }}
+          <span>{{ parsedHeroes[data.item.hero_id].localized_name }}</span>
         </template>
         <template slot="result" slot-scope="data">
           <p v-bind:class="{'won': gameResult(`${data.item.radiant_win}`,team(`${data.item.player_slot}`)) === 'Won', 'lost': gameResult(`${data.item.radiant_win}`,team(`${data.item.player_slot}`)) === 'Lost'}">
@@ -88,4 +88,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @media screen and (max-width: 520px) {
+    img {
+      display: block;
+    }
+  }
 </style>
