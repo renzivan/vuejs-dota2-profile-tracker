@@ -53,6 +53,7 @@ export default {
       } else {
         if (searchinput.value.length > 0) {
           this.sendReq()
+          searchinput.value = ''
         }
       }
     },
@@ -61,13 +62,6 @@ export default {
       this.$store.dispatch('getHeroes')
       this.$router.push('/profile/' + this.dotaId)
     }
-  },
-  beforeMount () {
-    // if (this.$route.params.dotaId > 0) {
-    //   // this.$store.dispatch('getUserData', this.$route.params.dotaId)
-    //   // this.$store.dispatch('getHeroes')
-    //   this.submitDotaId()
-    // }
   }
 }
 </script>
