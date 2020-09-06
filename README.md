@@ -40,6 +40,6 @@ $ npm install bootstrap-vue bootstrap
 
 ### Issues
 ``` bash
-# If error node-sass occurs on npm install : Module build failed (from ./node_modules/sass-loader/lib/loader.js):
+# If node-sass error occurs on npm install : Module build failed (from ./node_modules/sass-loader/lib/loader.js):
 $ npm rebuild node-sass
 ```
