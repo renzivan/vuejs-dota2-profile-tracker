@@ -8,34 +8,34 @@
 ### Getting Started
 ```bash
 # Clone Repository
-$ git clone https://renzivan@bitbucket.org/renzivan/dota-2-web-app-using-vue.js.git
+git clone https://renzivan@bitbucket.org/renzivan/dota-2-web-app-using-vue.js.git
 
 # Install all dependencies
-$ npm install
+npm install
 
 # Run project
-$ npm run serve
+npm run serve
 ```
 
 ### Installed Dependencies
 ```bash
 # Install the Vue CLI
-$ npm install -g @vue/cli
+npm install -g @vue/cli
 
 # Install vue-router
-$ npm install vue-router
+npm install vue-router
 
 # Install Vuex
-$ npm install vuex
+npm install vuex
 
 # Install axios
-$ npm install axios
+npm install axios
 
 # Install Sass: create main.scss, and import in main.js
-$ npm install node-sass sass-loader --save-dev
+npm install node-sass sass-loader --save-dev
 
 # Install Bootstrap Vue
-$ npm install bootstrap-vue bootstrap
+npm install bootstrap-vue bootstrap
 ```
 
 ### Issues
